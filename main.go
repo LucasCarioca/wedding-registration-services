@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
-	"os"
-	"github.com/LucasCarioca/go-template/pkg/config"
-	"github.com/LucasCarioca/go-template/pkg/server"
 	"fmt"
+	"github.com/LucasCarioca/go-template/pkg/config"
+	"github.com/LucasCarioca/go-template/pkg/datasource"
+	"github.com/LucasCarioca/go-template/pkg/server"
+	"os"
 )
 
 func getEnv() string {
@@ -24,5 +25,6 @@ func getEnv() string {
 
 func main() {
 	config.Init(getEnv())
+	datasource.Init()
 	server.Init(config.GetConfig())
 }
