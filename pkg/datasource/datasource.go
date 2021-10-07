@@ -7,6 +7,7 @@ import (
 )
 
 var db *gorm.DB
+
 func Init() {
 	var err error
 	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
