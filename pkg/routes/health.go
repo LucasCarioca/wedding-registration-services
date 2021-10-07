@@ -1,9 +1,8 @@
-
 package routes
 
 import (
-	"net/http"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func get(context *gin.Context) {

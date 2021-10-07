@@ -25,12 +25,12 @@ func Init(env string) {
 	for _, k := range config.AllKeys() {
 		value := config.GetString(k)
 		if strings.HasPrefix(value, "${") && strings.HasSuffix(value, "}") {
-			config.Set(k, getEnvOrPanic(strings.TrimSuffix(strings.TrimPrefix(value,"${"), "}")))
+			config.Set(k, getEnvOrPanic(strings.TrimSuffix(strings.TrimPrefix(value, "${"), "}")))
 		}
 	}
 }
 
-func GetConfig() *viper.Viper { 
+func GetConfig() *viper.Viper {
 	return config
 }
 
