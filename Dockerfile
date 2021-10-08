@@ -18,4 +18,6 @@ WORKDIR /
 COPY --from=builder /wedding-api /wedding-api
 COPY --from=builder /app/config.* /
 
+ENV PORT=80
+
 ENTRYPOINT ["/wedding-api"]
