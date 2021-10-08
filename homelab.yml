@@ -32,7 +32,7 @@ spec:
   ports:
     - name: tcp
       port: 80
-      nodePort: 30000
+      nodePort: 30003
       targetPort: w-r-s-http
   selector:
     app: wedding-registration-api
