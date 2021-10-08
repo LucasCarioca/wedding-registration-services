@@ -1,9 +1,12 @@
 package routes
 
 import (
+	"errors"
+	"github.com/LucasCarioca/go-template/pkg/config"
 	"github.com/LucasCarioca/go-template/pkg/datasource"
 	"github.com/LucasCarioca/go-template/pkg/models"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"gorm.io/gorm"
 	"net/http"
 	"strconv"
@@ -11,6 +14,7 @@ import (
 
 type InvitationRouter struct {
 	db *gorm.DB
+	config *viper.Viper
 }
 
 type CreateInvitationRequest struct {
@@ -21,12 +25,23 @@ type CreateInvitationRequest struct {
 func NewInvitationRouter(app *gin.Engine) {
 	r := InvitationRouter{
 		db: datasource.GetDataSource(),
+		config: config.GetConfig(),
 	}
 
 	app.GET("/api/v1/invitations", r.getAllInvitations)
 	app.GET("/api/v1/invitations/:id", r.getInvitation)
 	app.POST("/api/v1/invitations", r.createInvitation)
 	app.DELETE("/api/v1/invitations/:id", r.deleteInvitation)
+}
+
+func (r *InvitationRouter) checkKey(ctx *gin.Context) error {
+	apiKey := r.config.GetString("API_KEY")
+	requestKey := ctx.Query("api_key")
+
+	if apiKey != requestKey {
+		return errors.New("INVALID_API_KEY")
+	}
+	return nil
 }
 
 func (r *InvitationRouter) readId(ctx *gin.Context) *int {
@@ -41,12 +56,36 @@ func (r *InvitationRouter) readId(ctx *gin.Context) *int {
 }
 
 func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
+	key := ctx.Query("registration_key")
+	if key != "" {
+		i := models.Invitation{}
+		var c int64
+		r.db.Where("registration_key = ?", key).First(&i).Count(&c)
+		if c < 1 {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND"})
+			return
+		}
+		ctx.JSON(http.StatusOK, i)
+		return
+	}
+
+	err := r.checkKey(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		return
+	}
+
 	invitations := make([]models.Invitation, 0)
 	r.db.Find(&invitations)
 	ctx.JSON(http.StatusOK, invitations)
 }
 
 func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
+	err := r.checkKey(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		return
+	}
 	var data CreateInvitationRequest
 	ctx.BindJSON(&data)
 	i := &models.Invitation{
@@ -59,6 +98,11 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 }
 
 func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
+	err := r.checkKey(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		return
+	}
 	id := r.readId(ctx)
 	if id != nil {
 		i := models.Invitation{}
@@ -73,6 +117,11 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 }
 
 func (r *InvitationRouter) deleteInvitation(ctx *gin.Context) {
+	err := r.checkKey(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		return
+	}
 	id := r.readId(ctx)
 	if id != nil {
 		i := models.Invitation{}
