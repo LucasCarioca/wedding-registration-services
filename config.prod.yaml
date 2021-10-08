@@ -1,4 +1,5 @@
 server:
   static: ./public
   host: 0.0.0.0
-  port: 8001
+  port: ${PORT|80}
+api_key: ${API_KEY}

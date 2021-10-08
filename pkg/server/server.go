@@ -12,6 +12,7 @@ import (
 func routesInit(app *gin.Engine) {
 	routes.HealthRouter(app)
 	routes.NewInvitationRouter(app)
+	routes.NewGuestRouter(app)
 }
 
 func Init(config *viper.Viper) {
