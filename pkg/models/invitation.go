@@ -6,8 +6,8 @@ import (
 )
 
 type Invitation struct {
-	gorm.Model
-	Name            string `json:"Name" binding:"required"`
+	Base
+	Name            string `json:"name" binding:"required"`
 	GuestCount      int    `json:"guest_count" binding:"required"`
 	Registered      bool   `json:"registered" binding:"required"`
 	RegistrationKey string `json:"registration_key" binding:"required" gorm:"index;"`
