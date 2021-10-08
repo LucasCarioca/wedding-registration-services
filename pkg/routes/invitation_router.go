@@ -13,7 +13,7 @@ import (
 )
 
 type InvitationRouter struct {
-	db *gorm.DB
+	db     *gorm.DB
 	config *viper.Viper
 }
 
@@ -24,7 +24,7 @@ type CreateInvitationRequest struct {
 
 func NewInvitationRouter(app *gin.Engine) {
 	r := InvitationRouter{
-		db: datasource.GetDataSource(),
+		db:     datasource.GetDataSource(),
 		config: config.GetConfig(),
 	}
 
