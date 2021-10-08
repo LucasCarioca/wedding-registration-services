@@ -2,12 +2,20 @@ FROM golang:latest as builder
 
 WORKDIR /app
 
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
 COPY ./ ./
+RUN go build -o /wedding-api
 
-RUN go build -o main .
 
-FROM alpine:latest
+#FROM gcr.io/distroless/base-debian10
+FROM golang:latest
 
-COPY --from=builder /app /app
+WORKDIR /
 
-CMD ["/app/main"]
+COPY --from=builder /wedding-api /wedding-api
+COPY --from=builder /app/config.* /
+
+ENTRYPOINT ["/wedding-api"]
