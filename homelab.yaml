@@ -28,45 +28,45 @@ spec:
                   name: wedding-pg
                   key: API_KEY
             - name: ENV
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: ENV
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: ENV
             - name: PG_DB
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_DB
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_DB
             - name: PG_HOST
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_HOST
             - name: PG_PASS
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_PASS
             - name: PG_PORT
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_PORT
             - name: PG_SSL
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_SSL
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_SSL
             - name: PG_TIMEZONE
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_TIMEZONE
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_TIMEZONE
             - name: PG_USER
-                valueFrom:
-                  secretKeyRef:
-                    name: wedding-pg
-                    key: PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_USER
 ---
 apiVersion: v1
 kind: Service
