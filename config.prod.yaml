@@ -3,3 +3,12 @@ server:
   host: 0.0.0.0
   port: ${PORT|80}
 api_key: ${API_KEY}
+data_source:
+  driver: postgres
+  username: ${PG_USER}
+  password: ${PG_PASS}
+  host: ${PG_HOST}
+  port: ${PG_PORT}
+  database: ${PG_DB}
+  ssl_mode: ${PG_SSL}
+  time_zone: ${PG_TIMEZONE}
