@@ -25,6 +25,6 @@ func getEnv() string {
 
 func main() {
 	config.Init(getEnv())
-	datasource.Init()
+	datasource.Init(config.GetConfig())
 	server.Init(config.GetConfig())
 }
