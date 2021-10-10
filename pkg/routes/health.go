@@ -11,6 +11,7 @@ func get(context *gin.Context) {
 	})
 }
 
+//HealthRouter router for the health check endpoint
 func HealthRouter(router *gin.Engine) {
 	router.GET("/api/v1/health", get)
 }

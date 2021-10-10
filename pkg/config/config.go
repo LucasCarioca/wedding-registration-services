@@ -9,6 +9,7 @@ import (
 
 var config *viper.Viper
 
+//Init initializes the configs and loads the specific values
 func Init(env string) {
 	config = viper.New()
 
@@ -19,7 +20,7 @@ func Init(env string) {
 
 	err := config.ReadInConfig()
 	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %w \n", err))
+		panic(fmt.Errorf("fatal error config file: %w", err))
 	}
 
 	for _, k := range config.AllKeys() {
@@ -30,6 +31,7 @@ func Init(env string) {
 	}
 }
 
+//GetConfig returns the instance of the config values
 func GetConfig() *viper.Viper {
 	return config
 }

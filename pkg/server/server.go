@@ -14,6 +14,7 @@ func routesInit(app *gin.Engine) {
 	routes.NewGuestRouter(app)
 }
 
+//Init initializes the service and attaches all routers
 func Init(config *viper.Viper) {
 	app := gin.Default()
 	app.Use(cors.Default())
