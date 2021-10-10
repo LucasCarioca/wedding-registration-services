@@ -12,16 +12,19 @@ import (
 	"strconv"
 )
 
+//InvitationRouter  router for invitation CRUD operations
 type InvitationRouter struct {
 	db     *gorm.DB
 	config *viper.Viper
 }
 
+//CreateInvitationRequest structure of the create request for invitations
 type CreateInvitationRequest struct {
 	Name       string `json:"name" binding:"required"`
 	GuestCount int    `json:"guest_count" binding:"required"`
 }
 
+//NewInvitationRouter creates a new instance of the invitation router
 func NewInvitationRouter(app *gin.Engine) {
 	r := InvitationRouter{
 		db:     datasource.GetDataSource(),
@@ -44,7 +47,7 @@ func (r *InvitationRouter) checkKey(ctx *gin.Context) error {
 	return nil
 }
 
-func (r *InvitationRouter) readId(ctx *gin.Context) *int {
+func (r *InvitationRouter) readID(ctx *gin.Context) *int {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -103,7 +106,7 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
 	}
-	id := r.readId(ctx)
+	id := r.readID(ctx)
 	if id != nil {
 		i := models.Invitation{}
 		var c int64
@@ -122,7 +125,7 @@ func (r *InvitationRouter) deleteInvitation(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
 	}
-	id := r.readId(ctx)
+	id := r.readID(ctx)
 	if id != nil {
 		i := models.Invitation{}
 		var c int64

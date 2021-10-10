@@ -1,5 +1,6 @@
 package models
 
+//Guest model for the guest table
 type Guest struct {
 	Base
 	FirstName    string     `json:"first_name" binding:"required"`

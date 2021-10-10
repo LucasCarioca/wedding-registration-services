@@ -9,10 +9,12 @@ import (
 	"strconv"
 )
 
+//GuestRouter router for guest CRUD operations
 type GuestRouter struct {
 	db *gorm.DB
 }
 
+//CreateGuestRequest structure of the create request for guests
 type CreateGuestRequest struct {
 	FirstName       string `json:"first_name" binding:"required"`
 	LastName        string `json:"last_name" binding:"required"`
@@ -21,6 +23,7 @@ type CreateGuestRequest struct {
 	RegistrationKey string `json:"registration_key" binding:"required"`
 }
 
+//NewGuestRouter creates a new instance of the guest router
 func NewGuestRouter(app *gin.Engine) {
 	r := GuestRouter{
 		db: datasource.GetDataSource(),
@@ -32,7 +35,7 @@ func NewGuestRouter(app *gin.Engine) {
 	app.DELETE("/api/v1/guests/:id", r.deleteGuest)
 }
 
-func (r *GuestRouter) readId(ctx *gin.Context) *int {
+func (r *GuestRouter) readID(ctx *gin.Context) *int {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -82,7 +85,7 @@ func (r *GuestRouter) createGuest(ctx *gin.Context) {
 }
 
 func (r *GuestRouter) getGuest(ctx *gin.Context) {
-	id := r.readId(ctx)
+	id := r.readID(ctx)
 	if id != nil {
 		i := models.Guest{}
 		var c int64
@@ -96,7 +99,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 }
 
 func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
-	id := r.readId(ctx)
+	id := r.readID(ctx)
 	if id != nil {
 		i := models.Guest{}
 		var c int64
