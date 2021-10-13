@@ -1,23 +1,23 @@
 package routes
 
 import (
-	"errors"
 	"fmt"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/services"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 	"net/http"
-	"strconv"
 )
 
 //GuestRouter router for guest CRUD operations
 type GuestRouter struct {
 	db     *gorm.DB
 	config *viper.Viper
+	gs     *services.GuestService
+	is     *services.InvitationService
 }
 
 //CreateGuestRequest structure of the create request for guests
@@ -34,6 +34,8 @@ func NewGuestRouter(app *gin.Engine) {
 	r := GuestRouter{
 		db:     datasource.GetDataSource(),
 		config: config.GetConfig(),
+		gs:     services.NewGuestService(),
+		is:     services.NewInvitationService(),
 	}
 
 	app.GET("/api/v1/guests", r.getAllGuests)
@@ -42,53 +44,27 @@ func NewGuestRouter(app *gin.Engine) {
 	app.DELETE("/api/v1/guests/:id", r.deleteGuest)
 }
 
-func (r *GuestRouter) checkKey(ctx *gin.Context) error {
-	apiKey := r.config.GetString("API_KEY")
-	requestKey := ctx.Query("api_key")
-
-	if apiKey != requestKey {
-		return errors.New("INVALID_API_KEY")
-	}
-	return nil
-}
-
-func (r *GuestRouter) checkInvitation(ctx *gin.Context) (models.Invitation, error) {
+func (r *GuestRouter) checkInvitation(ctx *gin.Context) (*models.Invitation, error) {
 	requestKey := ctx.Query("registration_key")
-	i := models.Invitation{}
-	if requestKey != "" {
-		var c int64
-		r.db.Where("registration_key = ?", requestKey).First(&i).Count(&c)
-		if c < 1 {
-			return i, errors.New("INVALID_REGISTRATION_KEY")
-		}
-		return i, nil
-	}
-	return i, errors.New("MISSING_REGISTRATION_KEY")
-}
-
-func (r *GuestRouter) readID(ctx *gin.Context) *int {
-	id, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Not a valid id",
-		})
-		return nil
-	}
-	return &id
+	return r.is.GetInvitationByRegistrationKey(requestKey)
 }
 
 func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 	guests := make([]models.Guest, 0)
 	i, err := r.checkInvitation(ctx)
 	if err != nil {
-		err := r.checkKey(ctx)
+		err := checkKey(ctx)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 			return
 		}
-		r.db.Preload(clause.Associations).Find(&guests)
+		guests = r.gs.GetAllGuests()
 	} else {
-		r.db.Table("guests").Where("invitation_id = ?", i.ID).Preload(clause.Associations).Find(&guests)
+		guests, err = r.gs.GetAllGuestsByInvitationID(i.ID)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "guests not found", "error": err.Error()})
+			return
+		}
 	}
 	ctx.JSON(http.StatusOK, guests)
 }
@@ -103,33 +79,22 @@ func (r *GuestRouter) createGuest(ctx *gin.Context) {
 		return
 	}
 
-	var gc int64
-	r.db.Table("guests").Where("invitation_id = ?", i.ID).Count(&gc)
-
-	if gc >= int64(i.GuestCount) {
+	if r.gs.GetGuestCountByInvitationID(i.ID) >= i.GuestCount {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invitation guest count limit reached", "error": "GUEST_COUNT_LIMIT"})
 		return
 	}
-
-	g := &models.Guest{
-		FirstName:  data.FirstName,
-		LastName:   data.LastName,
-		Email:      data.Email,
-		Phone:      data.Phone,
-		Invitation: i,
-	}
-	r.db.Create(g)
+	g := r.gs.CreateGuest(data.FirstName, data.LastName, data.Email, data.Phone, *i)
 	ctx.JSON(http.StatusOK, g)
 }
 
 func (r *GuestRouter) getGuest(ctx *gin.Context) {
-	id := r.readID(ctx)
+	id := readID(ctx)
 	if id == nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
 		return
 	}
 
-	g, err := r.findGuestByID(*id)
+	g, err := r.gs.GetGuestByID(*id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": err.Error()})
 		return
@@ -137,7 +102,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 
 	i, err := r.checkInvitation(ctx)
 	if err != nil {
-		err = r.checkKey(ctx)
+		err = checkKey(ctx)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 			return
@@ -154,43 +119,36 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 	ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
 }
 
-func (r *GuestRouter) findGuestByID(id int) (*models.Guest, error) {
-	g := models.Guest{}
-	var c int64
-	r.db.Preload(clause.Associations).Find(&g, id).Count(&c)
-	if c > 0 {
-		return &g, nil
-	}
-	return nil, errors.New("GUEST_NOT_FOUND")
-}
-
 func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
-	id := r.readID(ctx)
+	id := readID(ctx)
 	if id == nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
-		return
-	}
-
-	g, err := r.findGuestByID(*id)
-	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
 		return
 	}
 
 	i, err := r.checkInvitation(ctx)
 	if err != nil {
-		err = r.checkKey(ctx)
+		err = checkKey(ctx)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 			return
 		}
-		r.db.Delete(&g)
+		g, err := r.gs.DeleteGuestByID(*id)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
+			return
+		}
 		ctx.JSON(http.StatusOK, g)
 		return
 	}
 
+	g, err := r.gs.GetGuestByID(*id)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
+		return
+	}
 	if i.ID == g.InvitationID {
-		r.db.Delete(&g)
+		r.gs.DeleteGuestByID(*id)
 		ctx.JSON(http.StatusOK, g)
 		return
 	}

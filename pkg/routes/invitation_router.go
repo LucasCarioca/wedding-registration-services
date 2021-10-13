@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"errors"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/services"
@@ -9,7 +8,6 @@ import (
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
 	"net/http"
-	"strconv"
 )
 
 //InvitationRouter  router for invitation CRUD operations
@@ -39,27 +37,6 @@ func NewInvitationRouter(app *gin.Engine) {
 	app.DELETE("/api/v1/invitations/:id", r.deleteInvitation)
 }
 
-func (r *InvitationRouter) checkKey(ctx *gin.Context) error {
-	apiKey := r.config.GetString("API_KEY")
-	requestKey := ctx.Query("api_key")
-
-	if apiKey != requestKey {
-		return errors.New("INVALID_API_KEY")
-	}
-	return nil
-}
-
-func (r *InvitationRouter) readID(ctx *gin.Context) *int {
-	id, err := strconv.Atoi(ctx.Param("id"))
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Not a valid id",
-		})
-		return nil
-	}
-	return &id
-}
-
 func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 	key := ctx.Query("registration_key")
 	if key != "" {
@@ -72,7 +49,7 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 		return
 	}
 
-	err := r.checkKey(ctx)
+	err := checkKey(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
@@ -81,7 +58,7 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 }
 
 func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
-	err := r.checkKey(ctx)
+	err := checkKey(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
@@ -93,12 +70,12 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 }
 
 func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
-	err := r.checkKey(ctx)
+	err := checkKey(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
 	}
-	id := r.readID(ctx)
+	id := readID(ctx)
 	if id != nil {
 		i, err := r.s.GetInvitationByID(*id)
 		if err != nil {
@@ -110,12 +87,12 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 }
 
 func (r *InvitationRouter) deleteInvitation(ctx *gin.Context) {
-	err := r.checkKey(ctx)
+	err := checkKey(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
 	}
-	id := r.readID(ctx)
+	id := readID(ctx)
 	if id != nil {
 		i, err := r.s.DeleteInvitationByID(*id)
 		if err != nil {
