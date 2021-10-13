@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"github.com/LucasCarioca/go-template/pkg/routes"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"

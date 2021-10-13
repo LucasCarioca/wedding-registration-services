@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/LucasCarioca/go-template/pkg/config"
-	"github.com/LucasCarioca/go-template/pkg/datasource"
-	"github.com/LucasCarioca/go-template/pkg/server"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
+	"ggithub.com/LucasCarioca/wedding-registration-services/pkg/server"
 	"os"
 )
 

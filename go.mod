@@ -1,4 +1,4 @@
-module github.com/LucasCarioca/go-template
+module github.com/LucasCarioca/wedding-registration-services
 
 go 1.16
 
