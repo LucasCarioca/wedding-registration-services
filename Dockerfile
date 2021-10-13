@@ -10,8 +10,7 @@ COPY ./ ./
 RUN go build -o /wedding-api
 
 
-#FROM gcr.io/distroless/base-debian10
-FROM golang:latest
+FROM gcr.io/distroless/base-debian10
 
 WORKDIR /
 
