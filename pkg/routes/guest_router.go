@@ -129,7 +129,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 		return
 	}
 
-	g, err := r.findGuestById(*id)
+	g, err := r.findGuestByID(*id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": err.Error()})
 		return
@@ -141,10 +141,9 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 			return
-		} else {
-			ctx.JSON(http.StatusOK, g)
-			return
 		}
+		ctx.JSON(http.StatusOK, g)
+		return
 	}
 
 	if i.ID == g.InvitationID {
@@ -155,7 +154,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 	ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
 }
 
-func (r *GuestRouter) findGuestById(id int) (*models.Guest, error) {
+func (r *GuestRouter) findGuestByID(id int) (*models.Guest, error) {
 	g := models.Guest{}
 	var c int64
 	r.db.Preload(clause.Associations).Find(&g, id).Count(&c)
@@ -172,7 +171,7 @@ func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
 		return
 	}
 
-	g, err := r.findGuestById(*id)
+	g, err := r.findGuestByID(*id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
 		return
@@ -184,11 +183,10 @@ func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 			return
-		} else {
-			r.db.Delete(&g)
-			ctx.JSON(http.StatusOK, g)
-			return
 		}
+		r.db.Delete(&g)
+		ctx.JSON(http.StatusOK, g)
+		return
 	}
 
 	if i.ID == g.InvitationID {
