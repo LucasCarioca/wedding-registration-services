@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
-	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/services"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -14,6 +14,7 @@ import (
 
 //InvitationRouter  router for invitation CRUD operations
 type InvitationRouter struct {
+	s      *services.InvitationService
 	db     *gorm.DB
 	config *viper.Viper
 }
@@ -27,6 +28,7 @@ type CreateInvitationRequest struct {
 //NewInvitationRouter creates a new instance of the invitation router
 func NewInvitationRouter(app *gin.Engine) {
 	r := InvitationRouter{
+		s:      services.NewInvitationService(),
 		db:     datasource.GetDataSource(),
 		config: config.GetConfig(),
 	}
@@ -61,11 +63,9 @@ func (r *InvitationRouter) readID(ctx *gin.Context) *int {
 func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 	key := ctx.Query("registration_key")
 	if key != "" {
-		i := models.Invitation{}
-		var c int64
-		r.db.Where("registration_key = ?", key).First(&i).Count(&c)
-		if c < 1 {
-			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND"})
+		i, err := r.s.GetInvitationByRegistrationKey(key)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, i)
@@ -77,10 +77,7 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
 		return
 	}
-
-	invitations := make([]models.Invitation, 0)
-	r.db.Find(&invitations)
-	ctx.JSON(http.StatusOK, invitations)
+	ctx.JSON(http.StatusOK, r.s.GetAllInvitations())
 }
 
 func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
@@ -91,12 +88,7 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 	}
 	var data CreateInvitationRequest
 	ctx.BindJSON(&data)
-	i := &models.Invitation{
-		Name:       data.Name,
-		GuestCount: data.GuestCount,
-		Registered: false,
-	}
-	r.db.Create(i)
+	i := r.s.CreateInvitation(data.Name, data.GuestCount)
 	ctx.JSON(http.StatusOK, i)
 }
 
@@ -108,14 +100,12 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 	}
 	id := r.readID(ctx)
 	if id != nil {
-		i := models.Invitation{}
-		var c int64
-		r.db.Find(&i, id).Count(&c)
-		if c > 0 {
-			ctx.JSON(http.StatusOK, i)
-		} else {
-			ctx.JSON(http.StatusNotFound, gin.H{})
+		i, err := r.s.GetInvitationByID(*id)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": err.Error()})
+			return
 		}
+		ctx.JSON(http.StatusOK, i)
 	}
 }
 
@@ -127,14 +117,11 @@ func (r *InvitationRouter) deleteInvitation(ctx *gin.Context) {
 	}
 	id := r.readID(ctx)
 	if id != nil {
-		i := models.Invitation{}
-		var c int64
-		r.db.Find(&i, id).Count(&c)
-		if c > 0 {
-			r.db.Delete(&i)
-			ctx.JSON(http.StatusOK, i)
-		} else {
-			ctx.JSON(http.StatusNotFound, gin.H{})
+		i, err := r.s.DeleteInvitationByID(*id)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": err.Error()})
+			return
 		}
+		ctx.JSON(http.StatusOK, i)
 	}
 }
