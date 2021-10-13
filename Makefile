@@ -1,5 +1,8 @@
 .PHONY := all
 
+download:
+	go mod download
+
 start:
 	go run .
 

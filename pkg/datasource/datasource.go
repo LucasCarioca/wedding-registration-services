@@ -2,7 +2,7 @@ package datasource
 
 import (
 	"fmt"
-	"github.com/LucasCarioca/go-template/pkg/models"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"

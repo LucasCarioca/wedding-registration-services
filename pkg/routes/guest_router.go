@@ -3,9 +3,9 @@ package routes
 import (
 	"errors"
 	"fmt"
-	"github.com/LucasCarioca/go-template/pkg/config"
-	"github.com/LucasCarioca/go-template/pkg/datasource"
-	"github.com/LucasCarioca/go-template/pkg/models"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
