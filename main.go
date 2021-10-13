@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
-	"ggithub.com/LucasCarioca/wedding-registration-services/pkg/server"
+	"github.com/LucasCarioca/wedding-registration-services/pkg/server"
 	"os"
 )
 
