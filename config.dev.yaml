@@ -5,4 +5,4 @@ server:
 api_key: ${API_KEY|letmein}
 data_source:
   driver: sqlite
-  host: test.db
+  host: file::memory:?cache=shared
