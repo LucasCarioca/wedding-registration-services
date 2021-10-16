@@ -26,7 +26,7 @@ func Test_guest_services(t *testing.T) {
 		phone := "5555555555"
 		g := gs.CreateGuest(firstName, lastName, email, phone, i)
 		assert.NotNil(t, g.ID)
-		assert.Equalf(t,i.ID, g.InvitationID, "should have a foreign key to the invitation")
+		assert.Equalf(t, i.ID, g.InvitationID, "should have a foreign key to the invitation")
 		assert.Equalf(t, firstName, g.FirstName, "should have the right firstname")
 		assert.Equalf(t, lastName, g.LastName, "should have the right lastname")
 		assert.Equalf(t, email, g.Email, "should have the right email")
@@ -43,7 +43,7 @@ func Test_guest_services(t *testing.T) {
 		id := gs.CreateGuest(firstName, lastName, email, phone, i).ID
 		g, err := gs.GetGuestByID(int(id))
 		assert.Nil(t, err, "should not throw an error")
-		assert.Equalf(t,i.ID, g.InvitationID, "should have a foreign key to the invitation")
+		assert.Equalf(t, i.ID, g.InvitationID, "should have a foreign key to the invitation")
 		assert.Equalf(t, firstName, g.FirstName, "should have the right firstname")
 		assert.Equalf(t, lastName, g.LastName, "should have the right lastname")
 		assert.Equalf(t, email, g.Email, "should have the right email")
