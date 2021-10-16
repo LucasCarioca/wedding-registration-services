@@ -16,6 +16,7 @@ func Init(env string) {
 	config.SetConfigName(fmt.Sprintf("config.%s", env))
 	config.SetConfigType("yaml")
 	config.AddConfigPath(".")
+	config.AddConfigPath("../../")
 	config.SetEnvPrefix("secret")
 
 	err := config.ReadInConfig()

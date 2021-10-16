@@ -1,1 +1,24 @@
 mode: count
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:20.38,25.2 1 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:28.54,32.2 3 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:35.84,39.2 3 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:42.65,46.2 3 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:49.133,59.2 3 11
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:62.68,66.11 4 3
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:69.2,69.43 1 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:66.11,68.3 1 2
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:73.71,77.11 4 11
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:80.2,81.16 2 11
+github.com/LucasCarioca/wedding-registration-services/pkg/services/guest-service.go:77.11,79.3 1 0
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:19.48,24.2 1 2
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:27.69,31.2 3 2
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:34.100,38.11 4 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:41.2,41.16 1 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:38.11,40.3 1 0
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:45.83,49.11 4 3
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:52.2,52.16 1 2
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:49.11,51.3 1 1
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:56.93,64.2 3 14
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:67.86,71.11 4 14
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:74.2,75.16 2 14
+github.com/LucasCarioca/wedding-registration-services/pkg/services/invitation-service.go:71.11,73.3 1 0
