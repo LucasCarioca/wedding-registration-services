@@ -58,7 +58,7 @@ func Test_invitation_services(t *testing.T) {
 		is.DeleteInvitationByID(int(i.ID))
 		_, err = is.GetInvitationByID(int(id))
 		assert.NotNilf(t, err, "should throw an error")
-		assert.Equal(t,"INVITATION_NOT_FOUND", err.Error(), "should throw the right error")
+		assert.Equal(t, "INVITATION_NOT_FOUND", err.Error(), "should throw the right error")
 	})
 
 	t.Run("should get all invitations", func(t *testing.T) {
