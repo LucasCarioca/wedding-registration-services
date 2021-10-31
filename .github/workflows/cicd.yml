@@ -7,7 +7,7 @@ jobs:
   release:
     needs: ci
     if: github.ref == 'refs/heads/main'
-    uses: LucasCarioca/workflows/.github/workflows/release-homelab-go.yml@v0.2.7
+    uses: LucasCarioca/workflows/.github/workflows/release-homelab.yml@v0.2.8
     with:
       registry: ghcr.io
       image_name: lucascarioca/wedding-registration-services
