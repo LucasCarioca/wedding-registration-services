@@ -1,0 +1,20 @@
+name: CICD
+on:
+  push:
+jobs:
+  ci:
+    uses: LucasCarioca/workflows/.github/workflows/ci-go.yml@v0.2.0
+  release:
+    needs: ci
+    if: github.ref == 'refs/heads/main'
+    uses: LucasCarioca/workflows/.github/workflows/release-homelab-go.yml@v0.2.7
+    with:
+      registry: ghcr.io
+      image_name: lucascarioca/wedding-registration-services
+      deployment: wedding-registration-api-deployment
+      container: wedding-registration-api
+      namespace: wedding
+    secrets:
+      kube_config: ${{ secrets.HOME_LAB_KUBE_CONFIG }}
+      username: ${{ github.actor }}
+      password: ${{ secrets.GITHUB_TOKEN }}
