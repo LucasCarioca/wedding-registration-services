@@ -12,6 +12,9 @@
         "emojis": "true"
       }
     },
+    "provider": {
+      "name": "github",
+    },
     "files-updater": {
       "names": ["npm"]
     }
