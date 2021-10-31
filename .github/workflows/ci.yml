@@ -1,6 +1,0 @@
-name: CI
-on:
-  push:
-jobs:
-  ci:
-    uses: LucasCarioca/workflows/.github/workflows/ci-go.yml@v0.2.0
