@@ -1,3 +1,11 @@
+## [1.0.7](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.6...v1.0.7) (2021-10-31)
+
+
+### Bug Fixes
+
+* cleanup workflows ([3197e11](https://github.com/LucasCarioca/wedding-registration-services/commit/3197e11888da3145db2607bd7b5c076fb3afa511))
+* use the latest version of the workflow ([d2c2a6e](https://github.com/LucasCarioca/wedding-registration-services/commit/d2c2a6e4db583d39f1537ea8e7a391e9b40243b9))
+
 ## [1.0.6](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.5...v1.0.6) (2021-10-31)
 
 
