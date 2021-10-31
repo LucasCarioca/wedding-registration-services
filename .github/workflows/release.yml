@@ -7,7 +7,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 jobs:
   release:
-    uses: LucasCarioca/workflows/.github/workflows/release-homelab-go.yml@v0.2.5
+    uses: LucasCarioca/workflows/.github/workflows/release-homelab-go.yml@v0.2.6
 #  build-release:
 #    runs-on: ubuntu-latest
 #    steps:
