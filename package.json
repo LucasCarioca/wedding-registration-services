@@ -1,6 +1,9 @@
 {
   "name": "wedding-registration-services",
   "version": "1.0.0",
+  "scripts": {
+    "release": "semantic-release"
+  },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.0",
     "@semantic-release/commit-analyzer": "^9.0.1",
