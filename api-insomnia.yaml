@@ -1,0 +1,418 @@
+_type: export
+__export_format: 4
+__export_date: 2021-11-11T15:13:02.119Z
+__export_source: insomnia.desktop.app:v2021.6.0
+resources:
+  - _id: req_ab065518936b48bea688ac1d8cf8d865
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643219795
+    created: 1635348184244
+    url: http://localhost:8081/api/v1/invitations?api_key={{ _.api_key }}
+    name: createInvitation
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Raquel",
+        	"guest_count": 2
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_dbfd835e49b445f892e377f2cb537670
+    authentication:
+      type: bearer
+      token: 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
+    metaSortKey: -1635348184244
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_2241479625c7444cb952cbe53b751b08
+    parentId: null
+    modified: 1633579720920
+    created: 1633579720920
+    name: wedding services
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_3c9f91c7e3ec45109033a575698d617f
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643464612
+    created: 1633637030992
+    url: "{{ _.base_url }}/api/v1/guests?registration_key={{ _.registration_key }}"
+    name: createguest
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"first_name": "Lucas",
+        	"first_name": "Desouza",
+        	"email": "l@d.com",
+        	"phone": "5555555555"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_cdb34e701fa149f2b89231885cda77a5
+    authentication: {}
+    metaSortKey: -1633637030992
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_898e0a9cbcd6431e80209e3e73407441
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643334809
+    created: 1634070866034
+    url: "{{ _.base_url }}/api/v1/guests?api_key={{ _.api_key }}"
+    name: getAllGuests
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_cdb34e701fa149f2b89231885cda77a5
+    authentication: {}
+    metaSortKey: -1633608380218.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1080fcaaa8aa4e2a9c83e41856c80a2b
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643472761
+    created: 1636643455863
+    url: "{{ _.base_url }}/api/v1/guests?registration_key={{ _.registration_key }}"
+    name: getAllGuestsByRegistration
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_cdb34e701fa149f2b89231885cda77a5
+    authentication: {}
+    metaSortKey: -1633604798871.8125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8eca322b58ea46b0b0a09c7ff366642a
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643339207
+    created: 1634071879437
+    url: "{{ _.base_url }}/api/v1/guests/4?api_key={{ _.api_key }}"
+    name: getGuestById
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_cdb34e701fa149f2b89231885cda77a5
+    authentication: {}
+    metaSortKey: -1633601217525.125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_88239a5579bd4086b456df0a862ce150
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643426927
+    created: 1634071553230
+    url: "{{ _.base_url }}/api/v1/guests/1?registration_key={{ _.registration_key
+      }}"
+    name: deleteGuest
+    description: ""
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_cdb34e701fa149f2b89231885cda77a5
+    authentication: {}
+    metaSortKey: -1633594054831.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0f0e50b1c77b416a85671a3521c9ca7d
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643430529
+    created: 1633579729445
+    url: "{{ _.base_url }}/api/v1/invitations?api_key={{ _.api_key }}"
+    name: createinvitation
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "new",
+        	"guest_count": 2
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_a2d731cf71874e7aa508180c5e4e3eeb
+    authentication: {}
+    metaSortKey: -1633579729445
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_80cf63bdf5214004bf798ed4de7f0372
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643431724
+    created: 1634071922771
+    url: "{{ _.base_url }}/api/v1/invitations?api_key={{ _.api_key }}"
+    name: getAllInvitations
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "sup",
+        	"guest_count": 2
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_a2d731cf71874e7aa508180c5e4e3eeb
+    authentication: {}
+    metaSortKey: -1630579936225.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_f919de66a4e007818328da759d3fc6a26cd744cf
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1636643390575
+    created: 1633579721097
+    name: Base Environment
+    data:
+      base_url: http://localhost:8081
+      api_key: letmein
+      registration_key: notreal
+    dataPropertyOrder:
+      "&":
+        - base_url
+        - api_key
+        - registration_key
+    color: null
+    isPrivate: false
+    metaSortKey: 1633579721097
+    _type: environment
+  - _id: jar_f919de66a4e007818328da759d3fc6a26cd744cf
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1635794145813
+    created: 1633579721099
+    name: Default Jar
+    cookies:
+      - key: JSESSIONID
+        value: EHh6oEwamRCsb25MDqiEgIYfMQHpriOh2XKhQeh1
+        domain: smlogin.aa.com
+        path: /
+        httpOnly: true
+        hostOnly: true
+        creation: 2021-10-25T17:38:40.272Z
+        lastAccessed: 2021-11-01T19:14:31.034Z
+        id: "14384773446847587"
+      - key: XSRF-TOKEN
+        value: 45a8e232-0d2a-4b49-82e2-8c32b2582f5b
+        domain: smlogin.aa.com
+        path: /
+        hostOnly: true
+        creation: 2021-10-25T17:38:40.272Z
+        lastAccessed: 2021-11-01T19:11:05.532Z
+        id: "44715156904916453"
+      - key: __VCAP_ID__
+        value: 77134472-a087-4bb3-70ce-38f1
+        domain: smlogin.aa.com
+        path: /
+        secure: true
+        httpOnly: true
+        hostOnly: true
+        creation: 2021-10-25T17:38:40.273Z
+        lastAccessed: 2021-11-01T19:14:31.034Z
+        id: "060110372391115385"
+      - key: aacook
+        value: server1
+        expires: 2021-11-01T23:12:17.000Z
+        maxAge: 14400
+        domain: smlogin.aa.com
+        path: /login
+        hostOnly: true
+        pathIsDefault: true
+        creation: 2021-10-25T17:38:40.274Z
+        lastAccessed: 2021-11-01T19:12:17.931Z
+        id: "2165406096990583"
+      - key: PF
+        value: zjoQ8SKt2mHX6SCzBuaGo8MNhSWR7ITbUJdLPbjyZ74r
+        domain: smlogin.aa.com
+        path: /
+        secure: true
+        httpOnly: true
+        extensions:
+          - SameSite=None
+        hostOnly: true
+        creation: 2021-10-25T17:38:40.274Z
+        lastAccessed: 2021-11-01T19:14:31.034Z
+        id: "12467123935897728"
+      - key: dtCookie
+        value: v_4_srv_25_sn_54AD1502FAE37A134C5B0CA85C5D0F67_perc_10552_ol_1_app-3Af5e0afda811bee88_0
+        domain: aa.com
+        path: /
+        hostOnly: false
+        creation: 2021-10-25T17:38:40.274Z
+        lastAccessed: 2021-10-25T17:38:40.274Z
+        id: "6967037445255759"
+      - key: AASMLOGIN
+        value: PLOGIN
+        maxAge: 600
+        domain: aa.com
+        path: /
+        hostOnly: false
+        creation: 2021-10-25T17:38:40.275Z
+        lastAccessed: 2021-10-25T17:38:40.275Z
+        id: "5690274518470342"
+      - key: _abck
+        value: 1318DDD4C1FE8D18A39E7C8E64AA9451~-1~YAAQdDsvF75abb18AQAAT9uIvQZQ0tan/5AHhHq/s1Lox63PyiuMAoDWBW+RpsUwWbbSry2GkeDGG/oPfV9XtXBGSLtdn3JR/tMfR7x+ZMhiZCLJzlH4quXCeAjEDy6wtULaZYeB2QvnfNdshqvxNTEyvwwDXRgNzmirDv01u/X821oAzSF2xkKMnl+iMexBJbWnDWp5ZPlGkrkI4SW1knk+TSLr81wTocPcI4ZW7gvqdHCGkcWVYt+MD5gxJH8U95dZn96Je0kThcWCPVXyJiV1dwicRs058clzde6KDxHycgGIwnzTK/HcZycsUyvhTAuC+gLApbVsQA9ikGARI5GHHWWfY70eKy989PdCGbbNDfYVwJ/tUfud2VzV1WEBAfw3~-1~-1~1635187108
+        expires: 2022-10-26T16:57:15.000Z
+        maxAge: 31536000
+        domain: aa.com
+        path: /
+        secure: true
+        hostOnly: false
+        creation: 2021-10-25T17:38:40.276Z
+        lastAccessed: 2021-10-26T16:57:15.514Z
+        id: "9425253657275561"
+      - key: bm_sz
+        value: 8A90A34EC81748C3F1392AEAD6760998~YAAQdDsvF79abb18AQAAT9uIvQ2900sGDhG2KnpJtsN6mAaI29LJASuqWClAqcxbToogYRATefV+Szw6PmTl5fQiPa64HfoHB+P5CD/b/j9lAgfVsV4Q3xJc2Uz0uYLWJY4Zc1OeWbkgU3AH1IMB6MKX9Qir4CvNq8GtG18eUzmaIxTJiZrxt3PEjzBWBmrLXQHtEybL0LGBTvUUUN2tv/MPPr7pzy1vnD2QGmWPBSxEutS9ycEIMvGT7wnkjmc3BqvLaoMIL5TrdQaO002iuqJtEJrmXbZKY2kZGXS0GA==~3294006~3355457
+        expires: 2021-10-26T20:57:15.000Z
+        maxAge: 14400
+        domain: aa.com
+        path: /
+        hostOnly: false
+        creation: 2021-10-25T17:38:40.276Z
+        lastAccessed: 2021-10-26T16:57:15.515Z
+        id: "7329371996518868"
+      - key: JSESSIONID
+        value: F7A16C2A897D659DE5ABD0D8DF9530FF
+        domain: smlogin.aa.com
+        path: /login
+        httpOnly: true
+        hostOnly: true
+        creation: 2021-10-25T17:38:40.276Z
+        lastAccessed: 2021-11-01T19:10:09.003Z
+        id: "0819790801399729"
+      - key: XSRF-TOKEN
+        value: 4a670c92-ef32-45f0-9e03-e3fbead76d31
+        domain: squad360-dev.mybluemix.net
+        path: /
+        secure: true
+        hostOnly: true
+        creation: 2021-10-25T17:49:34.804Z
+        lastAccessed: 2021-11-01T19:15:17.685Z
+        id: "498534538206421"
+      - key: srv_id
+        value: server4
+        expires: 2021-11-01T23:14:30.000Z
+        maxAge: 14400
+        domain: smlogin.aa.com
+        path: /login
+        hostOnly: true
+        pathIsDefault: true
+        creation: 2021-11-01T19:14:31.034Z
+        lastAccessed: 2021-11-01T19:14:31.034Z
+        id: "43150460956578285"
+      - key: XSRF-TOKEN
+        value: aebb40f8-9a9a-4084-aa2c-d1e18dd6c914
+        domain: localhost
+        path: /
+        hostOnly: true
+        creation: 2021-11-01T19:15:39.178Z
+        lastAccessed: 2021-11-01T19:15:45.812Z
+        id: "5289254889635402"
+    _type: cookie_jar
+  - _id: spc_ba3188b547ff4051a54d3b63940af1b9
+    parentId: wrk_2241479625c7444cb952cbe53b751b08
+    modified: 1633579720927
+    created: 1633579720927
+    fileName: wedding services
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_3d82ab3cb3d04b48b1b1eadbddc396bd
+    parentId: env_f919de66a4e007818328da759d3fc6a26cd744cf
+    modified: 1636643384378
+    created: 1636643284291
+    name: Local
+    data:
+      base_url: http://localhost:8081
+      api_key: letmein
+      registration_key: notreal
+    dataPropertyOrder:
+      "&":
+        - base_url
+        - api_key
+        - registration_key
+    color: null
+    isPrivate: false
+    metaSortKey: 1636643284291
+    _type: environment
