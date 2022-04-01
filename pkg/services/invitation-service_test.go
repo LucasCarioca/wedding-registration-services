@@ -56,7 +56,7 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get all invitations", func(t *testing.T) {
-		is.CreateInvitation(invictationName, invitationGuestCount)
+		is.CreateInvitation(invitationName, invitationGuestCount)
 		is.CreateInvitation(invitationName, invitationGuestCount)
 		is.CreateInvitation(invitationName, invitationGuestCount)
 		invitations := is.GetAllInvitations()
