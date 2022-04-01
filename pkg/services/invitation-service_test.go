@@ -1,20 +1,20 @@
 package services
 
 import (
+	"testing"
+
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func Test_invitation_services(t *testing.T) {
 	config.Init("dev")
 	datasource.Init(config.GetConfig())
 	is := NewInvitationService()
-
+	invitationName := "test"
+	invitationGuestCount := 1
 	t.Run("should create an invitation", func(t *testing.T) {
-		invitationName := "test"
-		invitationGuestCount := 1
 		i := is.CreateInvitation(invitationName, invitationGuestCount)
 		assert.NotNilf(t, i.ID, "should get an id")
 		assert.NotNilf(t, i.Registered, "should generate a registration key")
@@ -24,8 +24,6 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get an invitation by id", func(t *testing.T) {
-		invitationName := "test"
-		invitationGuestCount := 1
 		id := is.CreateInvitation(invitationName, invitationGuestCount).ID
 		i, err := is.GetInvitationByID(int(id))
 		assert.Nilf(t, err, "should not throw an error")
@@ -37,8 +35,6 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get an invitation by registration key", func(t *testing.T) {
-		invitationName := "test"
-		invitationGuestCount := 1
 		rk := is.CreateInvitation(invitationName, invitationGuestCount).RegistrationKey
 		i, err := is.GetInvitationByRegistrationKey(rk)
 		assert.Nilf(t, err, "should not throw an error")
@@ -50,8 +46,6 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should delete an invitation by id", func(t *testing.T) {
-		invitationName := "test"
-		invitationGuestCount := 1
 		id := is.CreateInvitation(invitationName, invitationGuestCount).ID
 		i, err := is.GetInvitationByID(int(id))
 		assert.Nilf(t, err, "should not throw an error")
@@ -62,9 +56,7 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get all invitations", func(t *testing.T) {
-		invitationName := "test"
-		invitationGuestCount := 1
-		is.CreateInvitation(invitationName, invitationGuestCount)
+		is.CreateInvitation(invictationName, invitationGuestCount)
 		is.CreateInvitation(invitationName, invitationGuestCount)
 		is.CreateInvitation(invitationName, invitationGuestCount)
 		invitations := is.GetAllInvitations()
