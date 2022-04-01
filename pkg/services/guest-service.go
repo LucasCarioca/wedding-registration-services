@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
@@ -46,13 +47,19 @@ func (s *GuestService) GetGuestCountByInvitationID(id uint) int {
 }
 
 //CreateGuest creates a new guest and returns it
-func (s *GuestService) CreateGuest(firstName string, lastName string, email string, phone string, i models.Invitation) models.Guest {
+func (s *GuestService) CreateGuest(firstName string, lastName string, email string, phone string, emailOptIn bool, smsOptIn bool, StreetAddress string, city string, state string, zipCode string, i models.Invitation) models.Guest {
 	g := &models.Guest{
-		FirstName:  firstName,
-		LastName:   lastName,
-		Email:      email,
-		Phone:      phone,
-		Invitation: i,
+		FirstName:     firstName,
+		LastName:      lastName,
+		Email:         email,
+		Phone:         phone,
+		EmailOptIn:    emailOptIn,
+		SMSOptIn:      smsOptIn,
+		StreetAddress: StreetAddress,
+		City:          city,
+		State:         state,
+		ZipCode:       zipCode,
+		Invitation:    i,
 	}
 	s.db.Create(g)
 	return *g
