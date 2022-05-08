@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
@@ -27,13 +26,6 @@ type CreateGuestRequest struct {
 	LastName        string `json:"last_name" binding:"required"`
 	Email           string `json:"email" binding:"required"`
 	Phone           string `json:"phone" binding:"required"`
-	EmailOptIn      bool   `json:"email_opt_in" binding:"required"`
-	SMSOptIn        bool   `json:"sms_opt_in" binding:"required"`
-	RegistrationKey string `json:"registration_key" binding:"required"`
-	StreetAddress   string `json:"street_address" binding:"required"`
-	City            string `json:"city" binding:"required"`
-	State           string `json:"state" binding:"required"`
-	ZipCode         string `json:"zip_code" binding:"required"`
 }
 
 //NewGuestRouter creates a new instance of the guest router
@@ -79,7 +71,6 @@ func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 func (r *GuestRouter) createGuest(ctx *gin.Context) {
 	var data CreateGuestRequest
 	ctx.BindJSON(&data)
-	fmt.Println(data)
 	i, err := r.checkInvitation(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND"})
@@ -90,7 +81,7 @@ func (r *GuestRouter) createGuest(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invitation guest count limit reached", "error": "GUEST_COUNT_LIMIT"})
 		return
 	}
-	g := r.gs.CreateGuest(data.FirstName, data.LastName, data.Email, data.Phone, data.EmailOptIn, data.SMSOptIn, data.StreetAddress, data.City, data.State, data.ZipCode, *i)
+	g := r.gs.CreateGuest(data.FirstName, data.LastName, data.Email, data.Phone, *i)
 	ctx.JSON(http.StatusOK, g)
 }
 
