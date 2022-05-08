@@ -54,6 +54,7 @@ func (s *GuestService) CreateGuest(firstName string, lastName string, email stri
 		Email:         email,
 		Phone:         phone,
 		Invitation:    i,
+		RSVP:          false,
 	}
 	s.db.Create(g)
 	return *g

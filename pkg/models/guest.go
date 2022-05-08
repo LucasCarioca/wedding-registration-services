@@ -11,5 +11,5 @@ type Guest struct {
 	SMSOptIn      bool       `json:"sms_opt_in" binding:"required"`
 	InvitationID  uint       `json:"invitation_id" binding:"required"`
 	Invitation    Invitation `json:"invitation" binding:"required"`
-	RSVP	      Invitation `json:"rsvp" binding:"required"`
+	RSVP	      bool 		 `json:"rsvp" binding:"required"`
 }
