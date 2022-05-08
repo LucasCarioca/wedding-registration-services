@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/services"
@@ -21,6 +22,8 @@ type InvitationRouter struct {
 type CreateInvitationRequest struct {
 	Name       string `json:"name" binding:"required"`
 	Message    string `json:"message" binding:"required"`
+	Phone 	   string `json:"phone" binding:"required"`
+	Email 	   string `json:"email" binding:"required"`
 	GuestCount int    `json:"guest_count" binding:"required"`
 }
 
@@ -65,9 +68,18 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 		return
 	}
 	var data CreateInvitationRequest
-	ctx.BindJSON(&data)
-	i := r.s.CreateInvitation(data.Name, data.Message, data.GuestCount)
-	ctx.JSON(http.StatusOK, i)
+	if err = ctx.BindJSON(&data); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": err.Error()})
+		return
+	}
+	fmt.Println(data)
+	i, err := r.s.CreateInvitation(data.Name, data.Message, data.Email, data.Phone, data.GuestCount)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "failed to create invitation", "error": err.Error()})
+		return
+	}
+	fmt.Println(i)
+	//ctx.JSON(http.StatusOK, i)
 }
 
 func (r *InvitationRouter) getInvitation(ctx *gin.Context) {

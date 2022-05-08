@@ -47,12 +47,10 @@ func (s *GuestService) GetGuestCountByInvitationID(id uint) int {
 }
 
 //CreateGuest creates a new guest and returns it
-func (s *GuestService) CreateGuest(firstName string, lastName string, email string, phone string, i models.Invitation) models.Guest {
+func (s *GuestService) CreateGuest(firstName string, lastName string, i models.Invitation) models.Guest {
 	g := &models.Guest{
 		FirstName:     firstName,
 		LastName:      lastName,
-		Email:         email,
-		Phone:         phone,
 		Invitation:    i,
 		RSVP:          false,
 	}

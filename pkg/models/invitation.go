@@ -12,6 +12,8 @@ type Invitation struct {
 	Message         string `json:"message" binding:"required"'`
 	GuestCount      int    `json:"guest_count" binding:"required"`
 	Registered      bool   `json:"registered" binding:"required"`
+	Phone           string `json:"phone" binding:"required"`
+	Email           string `json:"email" binding:"required"`
 	RegistrationKey string `json:"registration_key" binding:"required" gorm:"index;"`
 }
 

@@ -24,8 +24,6 @@ type GuestRouter struct {
 type CreateGuestRequest struct {
 	FirstName       string `json:"first_name" binding:"required"`
 	LastName        string `json:"last_name" binding:"required"`
-	Email           string `json:"email" binding:"required"`
-	Phone           string `json:"phone" binding:"required"`
 }
 
 //NewGuestRouter creates a new instance of the guest router
@@ -81,7 +79,7 @@ func (r *GuestRouter) createGuest(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invitation guest count limit reached", "error": "GUEST_COUNT_LIMIT"})
 		return
 	}
-	g := r.gs.CreateGuest(data.FirstName, data.LastName, data.Email, data.Phone, *i)
+	g := r.gs.CreateGuest(data.FirstName, data.LastName, *i)
 	ctx.JSON(http.StatusOK, g)
 }
 
