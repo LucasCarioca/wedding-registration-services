@@ -9,10 +9,7 @@ type Guest struct {
 	Phone         string     `json:"phone" binding:"required"`
 	EmailOptIn    bool       `json:"email_opt_in" binding:"required"`
 	SMSOptIn      bool       `json:"sms_opt_in" binding:"required"`
-	StreetAddress string     `json:"street_address" binding:"required"`
-	City          string     `json:"city" binding:"required"`
-	State         string     `json:"state" binding:"required"`
-	ZipCode       string     `json:"zip_code" binding:"required"`
 	InvitationID  uint       `json:"invitation_id" binding:"required"`
 	Invitation    Invitation `json:"invitation" binding:"required"`
+	RSVP	      Invitation `json:"rsvp" binding:"required"`
 }
