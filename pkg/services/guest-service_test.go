@@ -24,7 +24,7 @@ func Test_guest_services(t *testing.T) {
 	email := "tester@email.com"
 	phone := "5555555555"
 	t.Run("should create a guest", func(t *testing.T) {
-		i := is.CreateInvitation("test", 1)
+		i := is.CreateInvitation("test", "testing message", 1)
 		g := gs.CreateGuest(firstName, lastName, email, phone, i)
 		assert.NotNil(t, g.ID)
 		assert.Equalf(t, i.ID, g.InvitationID, "should have a foreign key to the invitation")
@@ -36,7 +36,7 @@ func Test_guest_services(t *testing.T) {
 	})
 
 	t.Run("should search for a guest by id", func(t *testing.T) {
-		i := is.CreateInvitation("test2", 1)
+		i := is.CreateInvitation("test2", "testing message", 1)
 		id := gs.CreateGuest(firstName, lastName, email, phone, i).ID
 		g, err := gs.GetGuestByID(int(id))
 		assert.Nil(t, err, "should not throw an error")
@@ -49,7 +49,7 @@ func Test_guest_services(t *testing.T) {
 	})
 
 	t.Run("should count the guests for an invitation", func(t *testing.T) {
-		i := is.CreateInvitation("test3", 3)
+		i := is.CreateInvitation("test3", "testing message", 3)
 		g1 := gs.CreateGuest(firstName, lastName, email, phone, i)
 		g2 := gs.CreateGuest(firstName, lastName, email, phone, i)
 		g3 := gs.CreateGuest(firstName, lastName, email, phone, i)
@@ -61,7 +61,7 @@ func Test_guest_services(t *testing.T) {
 	})
 
 	t.Run("should be able to delete a guest by id", func(t *testing.T) {
-		i := is.CreateInvitation("test4", 1)
+		i := is.CreateInvitation("test4", "testing message", 1)
 		id := gs.CreateGuest(firstName, lastName, email, phone, i).ID
 		g, err := gs.GetGuestByID(int(id))
 		assert.Nil(t, err, "should not throw an error")
@@ -72,7 +72,7 @@ func Test_guest_services(t *testing.T) {
 	})
 
 	t.Run("should get all guests for an invitation", func(t *testing.T) {
-		i := is.CreateInvitation("test5", 3)
+		i := is.CreateInvitation("test5", "testing message", 3)
 		gs.CreateGuest(firstName, lastName, email, phone, i)
 		gs.CreateGuest(firstName, lastName, email, phone, i)
 		gs.CreateGuest(firstName, lastName, email, phone, i)
@@ -89,8 +89,8 @@ func Test_guest_services(t *testing.T) {
 	})
 
 	t.Run("should get all guests", func(t *testing.T) {
-		i1 := is.CreateInvitation("test6", 1)
-		i2 := is.CreateInvitation("test6", 1)
+		i1 := is.CreateInvitation("test6", "testing message", 1)
+		i2 := is.CreateInvitation("test6", "testing message", 1)
 		gs.CreateGuest(firstName, lastName, email, phone, i1)
 		gs.CreateGuest(firstName, lastName, email, phone, i2)
 		guests := gs.GetAllGuests()
