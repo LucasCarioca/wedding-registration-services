@@ -20,6 +20,7 @@ type InvitationRouter struct {
 //CreateInvitationRequest structure of the create request for invitations
 type CreateInvitationRequest struct {
 	Name       string `json:"name" binding:"required"`
+	Message    string `json:"message" binding:"required"`
 	GuestCount int    `json:"guest_count" binding:"required"`
 }
 
@@ -65,7 +66,7 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 	}
 	var data CreateInvitationRequest
 	ctx.BindJSON(&data)
-	i := r.s.CreateInvitation(data.Name, data.GuestCount)
+	i := r.s.CreateInvitation(data.Name, data.Message, data.GuestCount)
 	ctx.JSON(http.StatusOK, i)
 }
 

@@ -53,9 +53,10 @@ func (s *InvitationService) GetInvitationByID(id int) (*models.Invitation, error
 }
 
 //CreateInvitation creates a new invitation and returns it
-func (s *InvitationService) CreateInvitation(name string, guestCount int) models.Invitation {
+func (s *InvitationService) CreateInvitation(name string, message string, guestCount int) models.Invitation {
 	i := &models.Invitation{
 		Name:       name,
+		Message:    message,
 		GuestCount: guestCount,
 		Registered: false,
 	}
