@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
@@ -53,15 +54,22 @@ func (s *InvitationService) GetInvitationByID(id int) (*models.Invitation, error
 }
 
 //CreateInvitation creates a new invitation and returns it
-func (s *InvitationService) CreateInvitation(name string, message string, guestCount int) models.Invitation {
+func (s *InvitationService) CreateInvitation(name string, message string, email string, phone string, guestCount int) (*models.Invitation, error) {
 	i := &models.Invitation{
 		Name:       name,
 		Message:    message,
+		Phone: 		phone,
+		Email: 		email,
 		GuestCount: guestCount,
 		Registered: false,
 	}
-	s.db.Create(i)
-	return *i
+	dbc := s.db.Create(i)
+	if dbc.Error != nil {
+		fmt.Println(dbc.Error)
+		return nil, dbc.Error
+	}
+	fmt.Println(dbc)
+	return i, nil
 }
 
 //DeleteInvitationByID deletes an invitation by its id and returns the deleted item and an error is it cannot be found
