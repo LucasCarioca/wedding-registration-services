@@ -68,7 +68,10 @@ func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 
 func (r *GuestRouter) createGuest(ctx *gin.Context) {
 	var data CreateGuestRequest
-	ctx.BindJSON(&data)
+	if err := ctx.BindJSON(&data); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": err.Error()})
+		return
+	}
 	i, err := r.checkInvitation(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND"})
