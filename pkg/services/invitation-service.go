@@ -2,7 +2,6 @@ package services
 
 import (
 	"errors"
-	"fmt"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/config"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/datasource"
 	"github.com/LucasCarioca/wedding-registration-services/pkg/models"
@@ -65,10 +64,8 @@ func (s *InvitationService) CreateInvitation(name string, message string, email 
 	}
 	dbc := s.db.Create(i)
 	if dbc.Error != nil {
-		fmt.Println(dbc.Error)
 		return nil, dbc.Error
 	}
-	fmt.Println(dbc)
 	return i, nil
 }
 
