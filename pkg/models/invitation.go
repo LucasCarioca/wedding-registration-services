@@ -9,7 +9,7 @@ import (
 type Invitation struct {
 	Base
 	Name            string `json:"name" binding:"required"`
-	Message         string `json:"message" binding:"required"'`
+	Message         string `json:"message" binding:"required"`
 	GuestCount      int    `json:"guest_count" binding:"required"`
 	Registered      bool   `json:"registered" binding:"required"`
 	Phone           string `json:"phone" binding:"required"`
