@@ -52,14 +52,14 @@ func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 	if err != nil {
 		err := checkKey(ctx)
 		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 			return
 		}
 		guests = r.gs.GetAllGuests()
 	} else {
 		guests, err = r.gs.GetAllGuestsByInvitationID(i.ID)
 		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "guests not found", "error": err.Error()})
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 			return
 		}
 	}
@@ -69,12 +69,12 @@ func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 func (r *GuestRouter) createGuest(ctx *gin.Context) {
 	var data CreateGuestRequest
 	if err := ctx.BindJSON(&data); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": "GUEST_CREATE_PAYLOAD_INVALID", "details": err.Error()})
 		return
 	}
 	i, err := r.checkInvitation(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND"})
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 		return
 	}
 
@@ -95,7 +95,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 
 	g, err := r.gs.GetGuestByID(*id)
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": err.Error()})
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 		return
 	}
 
@@ -103,7 +103,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 	if err != nil {
 		err = checkKey(ctx)
 		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, g)
@@ -129,12 +129,12 @@ func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
 	if err != nil {
 		err = checkKey(ctx)
 		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 			return
 		}
 		g, err := r.gs.DeleteGuestByID(*id)
 		if err != nil {
-			ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, g)
@@ -143,7 +143,7 @@ func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
 
 	g, err := r.gs.GetGuestByID(*id)
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND"})
+		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 		return
 	}
 	if i.ID == g.InvitationID {

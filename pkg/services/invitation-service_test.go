@@ -14,8 +14,10 @@ func Test_invitation_services(t *testing.T) {
 	is := NewInvitationService()
 	invitationName := "test"
 	invitationGuestCount := 1
+	email := "tester@email.com"
+	phone := "5555555555"
 	t.Run("should create an invitation", func(t *testing.T) {
-		i := is.CreateInvitation(invitationName, "testing message", invitationGuestCount)
+		i, _ := is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
 		assert.NotNilf(t, i.ID, "should get an id")
 		assert.NotNilf(t, i.Registered, "should generate a registration key")
 		assert.Equal(t, invitationName, i.Name, "should have have the right name")
@@ -24,7 +26,8 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get an invitation by id", func(t *testing.T) {
-		id := is.CreateInvitation(invitationName, "testing message", invitationGuestCount).ID
+		inv, _ := is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
+		id := inv.ID
 		i, err := is.GetInvitationByID(int(id))
 		assert.Nilf(t, err, "should not throw an error")
 		assert.NotNilf(t, i.ID, "should get an id")
@@ -35,7 +38,8 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get an invitation by registration key", func(t *testing.T) {
-		rk := is.CreateInvitation(invitationName, "testing message", invitationGuestCount).RegistrationKey
+		inv, _ := is.CreateInvitation(invitationName, "testing message",email, phone, invitationGuestCount)
+		rk := inv.RegistrationKey
 		i, err := is.GetInvitationByRegistrationKey(rk)
 		assert.Nilf(t, err, "should not throw an error")
 		assert.NotNilf(t, i.ID, "should get an id")
@@ -46,7 +50,8 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should delete an invitation by id", func(t *testing.T) {
-		id := is.CreateInvitation(invitationName, "testing message", invitationGuestCount).ID
+		inv, _ := is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
+		id := inv.ID
 		i, err := is.GetInvitationByID(int(id))
 		assert.Nilf(t, err, "should not throw an error")
 		is.DeleteInvitationByID(int(i.ID))
@@ -56,9 +61,9 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get all invitations", func(t *testing.T) {
-		is.CreateInvitation(invitationName, "testing message", invitationGuestCount)
-		is.CreateInvitation(invitationName, "testing message", invitationGuestCount)
-		is.CreateInvitation(invitationName, "testing message", invitationGuestCount)
+		is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
+		is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
+		is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
 		invitations := is.GetAllInvitations()
 		for _, i := range invitations {
 			assert.NotNilf(t, i.Registered, "should generate a registration key")

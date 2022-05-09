@@ -46,7 +46,7 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 	if key != "" {
 		i, err := r.s.GetInvitationByRegistrationKey(key)
 		if err != nil {
-			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": err.Error()})
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, i)
@@ -55,7 +55,7 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 
 	err := checkKey(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, r.s.GetAllInvitations())
@@ -64,18 +64,18 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 	err := checkKey(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 		return
 	}
 	var data CreateInvitationRequest
 	if err = ctx.BindJSON(&data); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": "INVITATION_CREATE_PAYLOAD_INVALID", "details": err.Error()})
 		return
 	}
 	fmt.Println(data)
 	i, err := r.s.CreateInvitation(data.Name, data.Message, data.Email, data.Phone, data.GuestCount)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "failed to create invitation", "error": err.Error()})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "failed to create invitation", "error": "INVITATION_CREATE_FAILED", "details": err.Error()})
 		return
 	}
 	fmt.Println(i)
@@ -85,14 +85,14 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 	err := checkKey(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 		return
 	}
 	id := readID(ctx)
 	if id != nil {
 		i, err := r.s.GetInvitationByID(*id)
 		if err != nil {
-			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": err.Error()})
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, i)
@@ -102,14 +102,14 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 func (r *InvitationRouter) deleteInvitation(ctx *gin.Context) {
 	err := checkKey(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": err.Error()})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 		return
 	}
 	id := readID(ctx)
 	if id != nil {
 		i, err := r.s.DeleteInvitationByID(*id)
 		if err != nil {
-			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": err.Error()})
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, i)
