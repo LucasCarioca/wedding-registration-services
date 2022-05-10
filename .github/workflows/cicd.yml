@@ -5,7 +5,7 @@ jobs:
   ci:
     uses: LucasCarioca/workflows/.github/workflows/ci-go.yml@v0.3.1
     with:
-      go-version: 1.16
+      go-version: 1.18
   release:
     needs: ci
     if: github.ref == 'refs/heads/main'
