@@ -8,4 +8,5 @@ import (
 func Init(db *gorm.DB) {
 	db.AutoMigrate(&Invitation{})
 	db.AutoMigrate(&Guest{})
+	db.AutoMigrate(&Donation{})
 }
