@@ -31,4 +31,4 @@ spec:
     - hosts:
         - wedding-api.ldkube.com
         - api.karenandlucas.com
-      secretName: wedding-tls
+      secretName: wedding-api-tls
