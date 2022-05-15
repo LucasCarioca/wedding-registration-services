@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wedding-service
+  namespace: wedding
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: wedding-api.ldkube.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: wedding-guest
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
+    - host: api.karenandlucas.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: wedding-service
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - wedding-api.ldkube.com
+        - api.karenandlucas.com
+      secretName: wedding-tls

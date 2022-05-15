@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: wedding
+  name: wedding-service
+  labels:
+    app: wedding-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wedding-service
+  template:
+    metadata:
+      labels:
+        app: wedding-service
+    spec:
+      containers:
+        - name: wedding-service
+          image: ghcr.io/lucascarioca/wedding-registration-services:latest
+          ports:
+            - containerPort: 80
+              name: w-r-s-http
+          env:
+            - name: GIN_MODE
+              value: release
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: API_KEY
+            - name: ENV
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: ENV
+            - name: PG_DB
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_DB
+            - name: PG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_HOST
+            - name: PG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_PASS
+            - name: PG_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_PORT
+            - name: PG_SSL
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_SSL
+            - name: PG_TIMEZONE
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_TIMEZONE
+            - name: PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: wedding-pg
+                  key: PG_USER
