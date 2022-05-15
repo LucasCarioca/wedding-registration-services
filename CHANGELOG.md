@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.7...v1.0.8) (2022-05-15)
+
+
+### Bug Fixes
+
+* testing with skip lint ([1b8de62](https://github.com/LucasCarioca/wedding-registration-services/commit/1b8de620d16d5723e8f68d9f907143d529676a54))
+
 ## [1.0.7](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.6...v1.0.7) (2021-10-31)
 
 
