@@ -12,6 +12,7 @@ jobs:
       deployment: wedding-service
       container: wedding-service
       namespace: wedding
+      build: false
     secrets:
       kube_config: ${{ secrets.DO_KUBE_CONFIG }}
       username: ${{ github.actor }}
