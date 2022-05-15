@@ -1,3 +1,23 @@
+# 1.0.0 (2022-05-15)
+
+
+### Bug Fixes
+
+* adding traditional semrel ([e5de125](https://github.com/LucasCarioca/wedding-registration-services/commit/e5de125a879b0a3db80e0cc9db880650ea0a2353))
+* adding traditional semrel ([ce99e5b](https://github.com/LucasCarioca/wedding-registration-services/commit/ce99e5b2e553cde468c69068511a8e87439aaf8b))
+* cleanup workflows ([0e5a88f](https://github.com/LucasCarioca/wedding-registration-services/commit/0e5a88fdc36a0dd5195ba1f68563e4e3b7bab6b8))
+* json syntax ([6023a80](https://github.com/LucasCarioca/wedding-registration-services/commit/6023a803fec48d3d1bff44fc710175ddf862d8e0))
+* testing semrel ([3effa3e](https://github.com/LucasCarioca/wedding-registration-services/commit/3effa3e23800e4b330823bb35bbc07a79919b15a))
+* testing semrel ([f861c65](https://github.com/LucasCarioca/wedding-registration-services/commit/f861c65ab321194580a4aad08a1a65a9020190da))
+* testing with skip lint ([c124218](https://github.com/LucasCarioca/wedding-registration-services/commit/c1242185deb723c57c6359e8fc97019b57dd15ef))
+* trying with private ([de30997](https://github.com/LucasCarioca/wedding-registration-services/commit/de3099738ecc6ef9be7463654f7236979f2ea01b))
+* use latest ([e52987a](https://github.com/LucasCarioca/wedding-registration-services/commit/e52987aa5e522c214e92a3beefb3b79bda375afb))
+* use latest ([c0783a7](https://github.com/LucasCarioca/wedding-registration-services/commit/c0783a72f33c48e475d58fca7233fc1da20d3e08))
+* use latest ([fc42314](https://github.com/LucasCarioca/wedding-registration-services/commit/fc42314ec5ba00c3e00d33ba4aac76baf1982996))
+* use latest ([810bf95](https://github.com/LucasCarioca/wedding-registration-services/commit/810bf95f8be3b62d70883d9578e9867c8a9415e1))
+* use latest ([d398f12](https://github.com/LucasCarioca/wedding-registration-services/commit/d398f1225486e312f83a9408bf1cbe00018db3c6))
+* use the latest version of the workflow ([4453c93](https://github.com/LucasCarioca/wedding-registration-services/commit/4453c93c3a42cd3d3361987ac52b0886128c65d4))
+
 ## [1.0.8](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.7...v1.0.8) (2022-05-15)
 
 
