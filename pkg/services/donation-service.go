@@ -35,10 +35,10 @@ func (s *DonationService) GetAllDonations() []models.Donation {
 //CreateDonation creates a new guest and returns it
 func (s *DonationService) CreateDonation(firstName string, lastName string, amount string, message string) models.Donation {
 	d := &models.Donation{
-		FirstName:  firstName,
-		LastName:   lastName,
-		Message: 	message,
-		Amount:     amount,
+		FirstName: firstName,
+		LastName:  lastName,
+		Message:   message,
+		Amount:    amount,
 	}
 	s.db.Create(d)
 	return *d
