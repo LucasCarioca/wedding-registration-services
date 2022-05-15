@@ -22,8 +22,8 @@ type InvitationRouter struct {
 type CreateInvitationRequest struct {
 	Name       string `json:"name" binding:"required"`
 	Message    string `json:"message" binding:"required"`
-	Phone 	   string `json:"phone" binding:"required"`
-	Email 	   string `json:"email" binding:"required"`
+	Phone      string `json:"phone" binding:"required"`
+	Email      string `json:"email" binding:"required"`
 	GuestCount int    `json:"guest_count" binding:"required"`
 }
 
