@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.9...v1.0.10) (2022-05-15)
+
+
+### Bug Fixes
+
+* bump BREAKING CHANGE: bump ([4344bc9](https://github.com/LucasCarioca/wedding-registration-services/commit/4344bc97e34bf756382c1dfca21f7df1f08118fc))
+
 # 1.0.0 (2022-05-15)
 
 
