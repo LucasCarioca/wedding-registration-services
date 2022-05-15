@@ -38,7 +38,7 @@ func Test_invitation_services(t *testing.T) {
 	})
 
 	t.Run("should get an invitation by registration key", func(t *testing.T) {
-		inv, _ := is.CreateInvitation(invitationName, "testing message",email, phone, invitationGuestCount)
+		inv, _ := is.CreateInvitation(invitationName, "testing message", email, phone, invitationGuestCount)
 		rk := inv.RegistrationKey
 		i, err := is.GetInvitationByRegistrationKey(rk)
 		assert.Nilf(t, err, "should not throw an error")

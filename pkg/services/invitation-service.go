@@ -57,8 +57,8 @@ func (s *InvitationService) CreateInvitation(name string, message string, email 
 	i := &models.Invitation{
 		Name:       name,
 		Message:    message,
-		Phone: 		phone,
-		Email: 		email,
+		Phone:      phone,
+		Email:      email,
 		GuestCount: guestCount,
 		Registered: false,
 	}

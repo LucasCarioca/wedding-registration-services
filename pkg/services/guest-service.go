@@ -49,10 +49,10 @@ func (s *GuestService) GetGuestCountByInvitationID(id uint) int {
 //CreateGuest creates a new guest and returns it
 func (s *GuestService) CreateGuest(firstName string, lastName string, i models.Invitation) models.Guest {
 	g := &models.Guest{
-		FirstName:     firstName,
-		LastName:      lastName,
-		Invitation:    i,
-		RSVP:          false,
+		FirstName:  firstName,
+		LastName:   lastName,
+		Invitation: i,
+		RSVP:       false,
 	}
 	s.db.Create(g)
 	return *g

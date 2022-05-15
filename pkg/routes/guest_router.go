@@ -22,8 +22,8 @@ type GuestRouter struct {
 
 //CreateGuestRequest structure of the create request for guests
 type CreateGuestRequest struct {
-	FirstName       string `json:"first_name" binding:"required"`
-	LastName        string `json:"last_name" binding:"required"`
+	FirstName string `json:"first_name" binding:"required"`
+	LastName  string `json:"last_name" binding:"required"`
 }
 
 //NewGuestRouter creates a new instance of the guest router
