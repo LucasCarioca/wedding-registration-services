@@ -12,6 +12,7 @@ func routesInit(app *gin.Engine) {
 	routes.HealthRouter(app)
 	routes.NewInvitationRouter(app)
 	routes.NewGuestRouter(app)
+	routes.NewDonationRouter(app)
 }
 
 //Init initializes the service and attaches all routers

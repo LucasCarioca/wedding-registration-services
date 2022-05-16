@@ -35,7 +35,7 @@ func Test_donation_services(t *testing.T) {
 		ds.DeleteDonationByID(int(id))
 	})
 
-	t.Run("should be able to delete a guest by id", func(t *testing.T) {
+	t.Run("should be able to delete a donation by id", func(t *testing.T) {
 		id := ds.CreateDonation(firstName, lastName, message, amount).ID
 		d, err := ds.GetDonationByID(int(id))
 		assert.Nil(t, err, "should not throw an error")
@@ -46,11 +46,11 @@ func Test_donation_services(t *testing.T) {
 	})
 
 
-	t.Run("should get all guests", func(t *testing.T) {
+	t.Run("should get all donations", func(t *testing.T) {
 		ds.CreateDonation(firstName, lastName, message, amount)
 		ds.CreateDonation(firstName, lastName, message, amount)
 		donations := ds.GetAllDonations()
-		assert.Equalf(t, 2, len(donations), "should show the right number of guests in a list")
+		assert.Equalf(t, 2, len(donations), "should show the right number of donations in a list")
 		for _, d := range donations {
 			assert.Equalf(t, firstName, d.FirstName, "should have the right firstname")
 			assert.Equalf(t, lastName, d.LastName, "should have the right lastname")
