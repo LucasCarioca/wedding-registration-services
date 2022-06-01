@@ -43,7 +43,7 @@ func NewGuestRouter(app *gin.Engine) {
 
 func (r *GuestRouter) checkInvitation(ctx *gin.Context) (*models.Invitation, error) {
 	requestKey := ctx.Query("registration_key")
-	return r.is.GetInvitationByRegistrationKey(requestKey)
+	return r.is.GetByRegistrationKey(requestKey)
 }
 
 func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
@@ -55,9 +55,9 @@ func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 			return
 		}
-		guests = r.gs.GetAllGuests()
+		guests = r.gs.GetAll()
 	} else {
-		guests, err = r.gs.GetAllGuestsByInvitationID(i.ID)
+		guests, err = r.gs.GetAllByInvitationID(i.ID)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 			return
@@ -78,11 +78,11 @@ func (r *GuestRouter) createGuest(ctx *gin.Context) {
 		return
 	}
 
-	if r.gs.GetGuestCountByInvitationID(i.ID) >= i.GuestCount {
+	if r.gs.GetCountByInvitationID(i.ID) >= i.GuestCount {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invitation guest count limit reached", "error": "GUEST_COUNT_LIMIT"})
 		return
 	}
-	g := r.gs.CreateGuest(data.FirstName, data.LastName, *i)
+	g := r.gs.Create(data.FirstName, data.LastName, *i)
 	ctx.JSON(http.StatusOK, g)
 }
 
@@ -93,7 +93,7 @@ func (r *GuestRouter) getGuest(ctx *gin.Context) {
 		return
 	}
 
-	g, err := r.gs.GetGuestByID(*id)
+	g, err := r.gs.GetByID(*id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 		return
@@ -132,7 +132,7 @@ func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 			return
 		}
-		g, err := r.gs.DeleteGuestByID(*id)
+		g, err := r.gs.DeleteByID(*id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 			return
@@ -141,13 +141,13 @@ func (r *GuestRouter) deleteGuest(ctx *gin.Context) {
 		return
 	}
 
-	g, err := r.gs.GetGuestByID(*id)
+	g, err := r.gs.GetByID(*id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "guest not found", "error": "GUEST_NOT_FOUND", "details": err.Error()})
 		return
 	}
 	if i.ID == g.InvitationID {
-		r.gs.DeleteGuestByID(*id)
+		r.gs.DeleteByID(*id)
 		ctx.JSON(http.StatusOK, g)
 		return
 	}

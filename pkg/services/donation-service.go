@@ -25,15 +25,15 @@ func NewDonationService() *DonationService {
 	}
 }
 
-//GetAllDonations returns a list of all guests
-func (s *DonationService) GetAllDonations() []models.Donation {
+//GetAll returns a list of all guests
+func (s *DonationService) GetAll() []models.Donation {
 	donations := make([]models.Donation, 0)
 	s.db.Preload(clause.Associations).Find(&donations)
 	return donations
 }
 
-//CreateDonation creates a new guest and returns it
-func (s *DonationService) CreateDonation(firstName string, lastName string, amount string, message string) models.Donation {
+//Create creates a new guest and returns it
+func (s *DonationService) Create(firstName string, lastName string, message string, amount string) models.Donation {
 	d := &models.Donation{
 		FirstName: firstName,
 		LastName:  lastName,
@@ -44,8 +44,8 @@ func (s *DonationService) CreateDonation(firstName string, lastName string, amou
 	return *d
 }
 
-//GetDonationByID returns a donation by its id and returns it and an error if not found
-func (s *DonationService) GetDonationByID(id int) (*models.Donation, error) {
+//GetByID returns a donation by its id and returns it and an error if not found
+func (s *DonationService) GetByID(id int) (*models.Donation, error) {
 	d := models.Donation{}
 	var c int64
 	s.db.Preload(clause.Associations).Find(&d, id).Count(&c)
@@ -55,8 +55,8 @@ func (s *DonationService) GetDonationByID(id int) (*models.Donation, error) {
 	return nil, errors.New("DONATION_NOT_FOUND")
 }
 
-//DeleteDonationByID deletes a donation by its id and returns the deleted item and an error is it cannot be found
-func (s *DonationService) DeleteDonationByID(id int) (*models.Donation, error) {
+//DeleteByID deletes a donation by its id and returns the deleted item and an error is it cannot be found
+func (s *DonationService) DeleteByID(id int) (*models.Donation, error) {
 	d := models.Donation{}
 	var c int64
 	s.db.Find(&d, id).Count(&c)

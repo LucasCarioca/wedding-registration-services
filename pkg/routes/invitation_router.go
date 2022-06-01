@@ -42,9 +42,20 @@ func NewInvitationRouter(app *gin.Engine) {
 }
 
 func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
+	value := ctx.Query("value")
+	if value != "" {
+		i, err := r.s.Search(value)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
+			return
+		}
+		ctx.JSON(http.StatusOK, i)
+		return
+	}
+
 	key := ctx.Query("registration_key")
 	if key != "" {
-		i, err := r.s.GetInvitationByRegistrationKey(key)
+		i, err := r.s.GetByRegistrationKey(key)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 			return
@@ -58,7 +69,7 @@ func (r *InvitationRouter) getAllInvitations(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, r.s.GetAllInvitations())
+	ctx.JSON(http.StatusOK, r.s.GetAll())
 }
 
 func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
@@ -73,7 +84,7 @@ func (r *InvitationRouter) createInvitation(ctx *gin.Context) {
 		return
 	}
 	fmt.Println(data)
-	i, err := r.s.CreateInvitation(data.Name, data.Message, data.Email, data.Phone, data.GuestCount)
+	i, err := r.s.Create(data.Name, data.Message, data.Email, data.Phone, data.GuestCount)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "failed to create invitation", "error": "INVITATION_CREATE_FAILED", "details": err.Error()})
 		return
@@ -88,9 +99,10 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
 		return
 	}
+
 	id := readID(ctx)
 	if id != nil {
-		i, err := r.s.GetInvitationByID(*id)
+		i, err := r.s.GetByID(*id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 			return
@@ -107,7 +119,7 @@ func (r *InvitationRouter) deleteInvitation(ctx *gin.Context) {
 	}
 	id := readID(ctx)
 	if id != nil {
-		i, err := r.s.DeleteInvitationByID(*id)
+		i, err := r.s.DeleteByID(*id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
 			return

@@ -40,7 +40,7 @@ func NewDonationRouter(app *gin.Engine) {
 }
 
 func (r *DonationRouter) getAllDonations(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, r.s.GetAllDonations())
+	ctx.JSON(http.StatusOK, r.s.GetAll())
 }
 
 func (r *DonationRouter) createDonation(ctx *gin.Context) {
@@ -49,14 +49,14 @@ func (r *DonationRouter) createDonation(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": "DONATION_CREATE_PAYLOAD_INVALID", "details": err.Error()})
 		return
 	}
-	d := r.s.CreateDonation(data.FirstName, data.FirstName, data.Message, data.Amount)
+	d := r.s.Create(data.FirstName, data.FirstName, data.Message, data.Amount)
 	ctx.JSON(http.StatusOK, d)
 }
 
 func (r *DonationRouter) getDonationByID(ctx *gin.Context) {
 	id := readID(ctx)
 	if id != nil {
-		d, err := r.s.GetDonationByID(*id)
+		d, err := r.s.GetByID(*id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "donation not found", "error": "DONATION_NOT_FOUND", "details": err.Error()})
 			return
@@ -68,7 +68,7 @@ func (r *DonationRouter) getDonationByID(ctx *gin.Context) {
 func (r *DonationRouter) deleteInvitation(ctx *gin.Context) {
 	id := readID(ctx)
 	if id != nil {
-		i, err := r.s.DeleteDonationByID(*id)
+		i, err := r.s.DeleteByID(*id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "DONATION_NOT_FOUND", "details": err.Error()})
 			return

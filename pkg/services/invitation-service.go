@@ -23,15 +23,15 @@ func NewInvitationService() *InvitationService {
 	}
 }
 
-//GetAllInvitations returns a list with all invitations
-func (s *InvitationService) GetAllInvitations() []models.Invitation {
+//GetAll returns a list with all invitations
+func (s *InvitationService) GetAll() []models.Invitation {
 	invitations := make([]models.Invitation, 0)
 	s.db.Find(&invitations)
 	return invitations
 }
 
-//GetInvitationByRegistrationKey returns an invitation by its registration key and an error is it cannot be found
-func (s *InvitationService) GetInvitationByRegistrationKey(key string) (*models.Invitation, error) {
+//GetByRegistrationKey returns an invitation by its registration key and an error is it cannot be found
+func (s *InvitationService) GetByRegistrationKey(key string) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
 	s.db.Where("registration_key = ?", key).First(&i).Count(&c)
@@ -41,8 +41,8 @@ func (s *InvitationService) GetInvitationByRegistrationKey(key string) (*models.
 	return &i, nil
 }
 
-//GetInvitationByID returns an invitation by its id and an error is it cannot be found
-func (s *InvitationService) GetInvitationByID(id int) (*models.Invitation, error) {
+//GetByID returns an invitation by its id and an error is it cannot be found
+func (s *InvitationService) GetByID(id int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
 	s.db.Find(&i, id).Count(&c)
@@ -52,8 +52,8 @@ func (s *InvitationService) GetInvitationByID(id int) (*models.Invitation, error
 	return &i, nil
 }
 
-//CreateInvitation creates a new invitation and returns it
-func (s *InvitationService) CreateInvitation(name string, message string, email string, phone string, guestCount int) (*models.Invitation, error) {
+//Create creates a new invitation and returns it
+func (s *InvitationService) Create(name string, message string, email string, phone string, guestCount int) (*models.Invitation, error) {
 	i := &models.Invitation{
 		Name:       name,
 		Message:    message,
@@ -69,8 +69,49 @@ func (s *InvitationService) CreateInvitation(name string, message string, email 
 	return i, nil
 }
 
-//DeleteInvitationByID deletes an invitation by its id and returns the deleted item and an error is it cannot be found
-func (s *InvitationService) DeleteInvitationByID(id int) (*models.Invitation, error) {
+func (s *InvitationService) GetByPhone(phone string) (*models.Invitation, error) {
+	i := models.Invitation{}
+	var c int64
+	s.db.Where("phone = ?", phone).First(&i).Count(&c)
+	if c < 1 {
+		return nil, errors.New("INVITATION_NOT_FOUND")
+	}
+	return &i, nil
+}
+
+//GetByEmail gets an invitation by email
+func (s *InvitationService) GetByEmail(email string) (*models.Invitation, error) {
+	i := models.Invitation{}
+	var c int64
+	s.db.Where("email = ?", email).First(&i).Count(&c)
+	if c < 1 {
+		return nil, errors.New("INVITATION_NOT_FOUND")
+	}
+	return &i, nil
+}
+
+//Search Attempts to find an invitation by phone email and registration key
+func (s *InvitationService) Search(value string) (*models.Invitation, error) {
+	i, err := s.GetByRegistrationKey(value)
+	if err == nil {
+		return i, nil
+	}
+
+	i, err = s.GetByPhone(value)
+	if err == nil {
+		return i, nil
+	}
+
+	i, err = s.GetByEmail(value)
+	if err == nil {
+		return i, nil
+	}
+
+	return nil, err
+}
+
+//DeleteByID deletes an invitation by its id and returns the deleted item and an error is it cannot be found
+func (s *InvitationService) DeleteByID(id int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
 	s.db.Find(&i, id).Count(&c)

@@ -25,29 +25,29 @@ func NewGuestService() *GuestService {
 	}
 }
 
-//GetAllGuests returns a list of all guests
-func (s *GuestService) GetAllGuests() []models.Guest {
+//GetAll returns a list of all guests
+func (s *GuestService) GetAll() []models.Guest {
 	guests := make([]models.Guest, 0)
 	s.db.Preload(clause.Associations).Find(&guests)
 	return guests
 }
 
-//GetAllGuestsByInvitationID returns a list of all guests for a given invitation id
-func (s *GuestService) GetAllGuestsByInvitationID(id uint) ([]models.Guest, error) {
+//GetAllByInvitationID returns a list of all guests for a given invitation id
+func (s *GuestService) GetAllByInvitationID(id uint) ([]models.Guest, error) {
 	guests := make([]models.Guest, 0)
 	s.db.Table("guests").Where("invitation_id = ?", id).Preload(clause.Associations).Find(&guests)
 	return guests, nil
 }
 
-//GetGuestCountByInvitationID returns a count of all guests for a given invitation id
-func (s *GuestService) GetGuestCountByInvitationID(id uint) int {
+//GetCountByInvitationID returns a count of all guests for a given invitation id
+func (s *GuestService) GetCountByInvitationID(id uint) int {
 	var gc int64
 	s.db.Table("guests").Where("invitation_id = ?", id).Count(&gc)
 	return int(gc)
 }
 
-//CreateGuest creates a new guest and returns it
-func (s *GuestService) CreateGuest(firstName string, lastName string, i models.Invitation) models.Guest {
+//Create creates a new guest and returns it
+func (s *GuestService) Create(firstName string, lastName string, i models.Invitation) models.Guest {
 	g := &models.Guest{
 		FirstName:  firstName,
 		LastName:   lastName,
@@ -58,8 +58,8 @@ func (s *GuestService) CreateGuest(firstName string, lastName string, i models.I
 	return *g
 }
 
-//GetGuestByID returns a guest by its id and returns it and an error if not found
-func (s *GuestService) GetGuestByID(id int) (*models.Guest, error) {
+//GetByID returns a guest by its id and returns it and an error if not found
+func (s *GuestService) GetByID(id int) (*models.Guest, error) {
 	g := models.Guest{}
 	var c int64
 	s.db.Preload(clause.Associations).Find(&g, id).Count(&c)
@@ -69,8 +69,8 @@ func (s *GuestService) GetGuestByID(id int) (*models.Guest, error) {
 	return nil, errors.New("GUEST_NOT_FOUND")
 }
 
-//DeleteGuestByID deletes a guest by its id and returns the deleted item and an error is it cannot be found
-func (s *GuestService) DeleteGuestByID(id int) (*models.Guest, error) {
+//DeleteByID deletes a guest by its id and returns the deleted item and an error is it cannot be found
+func (s *GuestService) DeleteByID(id int) (*models.Guest, error) {
 	g := models.Guest{}
 	var c int64
 	s.db.Find(&g, id).Count(&c)
