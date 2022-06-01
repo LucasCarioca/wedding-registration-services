@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.10...v1.1.0) (2022-06-01)
+
+
+### Features
+
+* adding new donation router ([63efa5d](https://github.com/LucasCarioca/wedding-registration-services/commit/63efa5df207ebdca15b15b00376b604e67149c33))
+* adding new donation router ([6f510b6](https://github.com/LucasCarioca/wedding-registration-services/commit/6f510b6382cf0c2d8b47fe4b7e5e37dd5c5699da))
+* adding search route and refactors ([8712963](https://github.com/LucasCarioca/wedding-registration-services/commit/87129634d1ddaaf50db08519b24561305dd3460d))
+
 ## [1.0.10](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.9...v1.0.10) (2022-05-15)
 
 
