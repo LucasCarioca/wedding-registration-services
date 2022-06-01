@@ -69,6 +69,7 @@ func (s *InvitationService) Create(name string, message string, email string, ph
 	return i, nil
 }
 
+//GetByPhone gets an invitation by phone
 func (s *InvitationService) GetByPhone(phone string) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
