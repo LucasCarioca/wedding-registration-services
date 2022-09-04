@@ -9,7 +9,7 @@ jobs:
       lint: false
   release:
     needs: ci
-    if: github.ref == 'refs/heads/main'
+    if: (github.ref == 'refs/heads/main') && !contains(github.event.commits[0].message, 'chore:')
     uses: LucasCarioca/workflows/.github/workflows/release-homelab.yml@v0.6.0
     with:
       registry: ghcr.io
