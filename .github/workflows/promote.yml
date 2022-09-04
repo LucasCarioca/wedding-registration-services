@@ -4,7 +4,7 @@ on:
 jobs:
   release:
     if: github.ref == 'refs/heads/main'
-    uses: LucasCarioca/workflows/.github/workflows/release-do.yml@v0.7.0
+    uses: LucasCarioca/workflows/.github/workflows/release-do-yarn.yml@v0.8.0
     with:
       config-files: k8s/do/
       registry: ghcr.io
