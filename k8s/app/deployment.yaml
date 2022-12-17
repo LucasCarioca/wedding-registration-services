@@ -2,26 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: wedding
-  name: wedding-registration-api-deployment
+  name: wedding-service
   labels:
-    app: wedding-registration-api
+    app: wedding-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wedding-registration-api
+      app: wedding-service
   template:
     metadata:
       labels:
-        app: wedding-registration-api
+        app: wedding-service
     spec:
       containers:
-        - name: wedding-registration-api
+        - name: wedding-service
           image: ghcr.io/lucascarioca/wedding-registration-services:latest
           ports:
             - containerPort: 80
               name: w-r-s-http
           env:
+            - name: GIN_MODE
+              value: release
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
@@ -67,18 +69,3 @@ spec:
                 secretKeyRef:
                   name: wedding-pg
                   key: PG_USER
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: wedding
-  name: wedding-registration-api-service
-spec:
-  type: NodePort
-  ports:
-    - name: tcp
-      port: 80
-      nodePort: 30003
-      targetPort: w-r-s-http
-  selector:
-    app: wedding-registration-api

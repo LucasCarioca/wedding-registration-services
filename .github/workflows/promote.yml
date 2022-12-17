@@ -4,9 +4,9 @@ on:
 jobs:
   release:
     if: github.ref == 'refs/heads/main'
-    uses: LucasCarioca/workflows/.github/workflows/release-do-yarn.yml@v0.8.0
+    uses: LucasCarioca/workflows/.github/workflows/release-ingress-yarn.yml@v0.8.0
     with:
-      config-files: k8s/do/
+      config-files: k8s/ingress/
       registry: ghcr.io
       image_name: lucascarioca/wedding-registration-services
       deployment: wedding-service

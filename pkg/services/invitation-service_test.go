@@ -20,7 +20,7 @@ func Test_invitation_services(t *testing.T) {
 		i, _ := is.Create(invitationName, "testing message", email, phone, invitationGuestCount)
 		assert.NotNilf(t, i.ID, "should get an id")
 		assert.NotNilf(t, i.Registered, "should generate a registration key")
-		assert.Equal(t, invitationName, i.Name, "should have have the right name")
+		assert.Equal(t, invitationName, i.Name, "should have the right name")
 		assert.Equal(t, invitationGuestCount, i.GuestCount, "should have have the right guest count")
 		is.DeleteByID(int(i.ID))
 	})
@@ -32,7 +32,7 @@ func Test_invitation_services(t *testing.T) {
 		assert.Nilf(t, err, "should not throw an error")
 		assert.NotNilf(t, i.ID, "should get an id")
 		assert.NotNilf(t, i.Registered, "should generate a registration key")
-		assert.Equal(t, invitationName, i.Name, "should have have the right name")
+		assert.Equal(t, invitationName, i.Name, "should have the right name")
 		assert.Equal(t, invitationGuestCount, i.GuestCount, "should have have the right guest count")
 		is.DeleteByID(int(i.ID))
 	})
@@ -44,7 +44,7 @@ func Test_invitation_services(t *testing.T) {
 		assert.Nilf(t, err, "should not throw an error")
 		assert.NotNilf(t, i.ID, "should get an id")
 		assert.NotNilf(t, i.Registered, "should generate a registration key")
-		assert.Equal(t, invitationName, i.Name, "should have have the right name")
+		assert.Equal(t, invitationName, i.Name, "should have the right name")
 		assert.Equal(t, invitationGuestCount, i.GuestCount, "should have have the right guest count")
 		is.DeleteByID(int(i.ID))
 	})
@@ -60,6 +60,16 @@ func Test_invitation_services(t *testing.T) {
 		assert.Equal(t, "INVITATION_NOT_FOUND", err.Error(), "should throw the right error")
 	})
 
+	t.Run("should decline an invitation by id", func(t *testing.T) {
+		inv, _ := is.Create(invitationName, "testing message", email, phone, invitationGuestCount)
+		id := inv.ID
+		i, _ := is.GetByID(int(id))
+		assert.Equal(t, false, i.Declined, "should not have been declined")
+		is.DeclineById(int(i.ID))
+		i, _ = is.GetByID(int(id))
+		assert.Equal(t, true, i.Declined, "should have been declined")
+	})
+
 	t.Run("should get all invitations", func(t *testing.T) {
 		is.Create(invitationName, "testing message", email, phone, invitationGuestCount)
 		is.Create(invitationName, "testing message", email, phone, invitationGuestCount)
@@ -67,7 +77,7 @@ func Test_invitation_services(t *testing.T) {
 		invitations := is.GetAll()
 		for _, i := range invitations {
 			assert.NotNilf(t, i.Registered, "should generate a registration key")
-			assert.Equal(t, invitationName, i.Name, "should have have the right name")
+			assert.Equal(t, invitationName, i.Name, "should have the right name")
 			assert.Equal(t, invitationGuestCount, i.GuestCount, "should have have the right guest count")
 			is.DeleteByID(int(i.ID))
 		}

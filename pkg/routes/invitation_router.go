@@ -27,6 +27,10 @@ type CreateInvitationRequest struct {
 	GuestCount int    `json:"guest_count" binding:"required"`
 }
 
+type DeclineInvitationRequest struct {
+	Instruction string `json:"instruction" binding:"required""`
+}
+
 //NewInvitationRouter creates a new instance of the invitation router
 func NewInvitationRouter(app *gin.Engine) {
 	r := InvitationRouter{
@@ -38,6 +42,7 @@ func NewInvitationRouter(app *gin.Engine) {
 	app.GET("/api/v1/invitations", r.getAllInvitations)
 	app.GET("/api/v1/invitations/:id", r.getInvitation)
 	app.POST("/api/v1/invitations", r.createInvitation)
+	app.PUT("/api/v1/invitations/:id", r.declineInvitation)
 	app.DELETE("/api/v1/invitations/:id", r.deleteInvitation)
 }
 
@@ -102,6 +107,38 @@ func (r *InvitationRouter) getInvitation(ctx *gin.Context) {
 
 	id := readID(ctx)
 	if id != nil {
+		i, err := r.s.GetByID(*id)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
+			return
+		}
+		ctx.JSON(http.StatusOK, i)
+	}
+}
+
+func (r *InvitationRouter) declineInvitation(ctx *gin.Context) {
+	err := checkKey(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized request", "error": "UNAUTHORIZED_REQUEST", "details": err.Error()})
+		return
+	}
+	var data DeclineInvitationRequest
+	if err = ctx.BindJSON(&data); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": "INVITATION_DECLINE_PAYLOAD_INVALID", "details": err.Error()})
+		return
+	}
+	fmt.Println(data)
+	id := readID(ctx)
+	if id != nil {
+		if data.Instruction == "declined" {
+			i, err := r.s.DeclineById(*id)
+			if err != nil {
+				ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
+				return
+			}
+			ctx.JSON(http.StatusOK, i)
+			return
+		}
 		i, err := r.s.GetByID(*id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})

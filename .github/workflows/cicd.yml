@@ -7,17 +7,17 @@ jobs:
     with:
       go-version: 1.18
       lint: false
-  release:
-    needs: ci
-    if: (github.ref == 'refs/heads/main') && !contains(github.event.commits[0].message, 'chore:')
-    uses: LucasCarioca/workflows/.github/workflows/release-homelab.yml@v0.6.0
-    with:
-      registry: ghcr.io
-      image_name: lucascarioca/wedding-registration-services
-      deployment: wedding-registration-api-deployment
-      container: wedding-registration-api
-      namespace: wedding
-    secrets:
-      kube_config: ${{ secrets.HOME_LAB_KUBE_CONFIG }}
-      username: ${{ github.actor }}
-      password: ${{ secrets.GITHUB_TOKEN }}
+#  release:
+#    needs: ci
+#    if: (github.ref == 'refs/heads/main') && !contains(github.event.commits[0].message, 'chore:')
+#    uses: LucasCarioca/workflows/.github/workflows/release-homelab.yml@v0.6.0
+#    with:
+#      registry: ghcr.io
+#      image_name: lucascarioca/wedding-registration-services
+#      deployment: wedding-registration-api-deployment
+#      container: wedding-registration-api
+#      namespace: wedding
+#    secrets:
+#      kube_config: ${{ secrets.HOME_LAB_KUBE_CONFIG }}
+#      username: ${{ github.actor }}
+#      password: ${{ secrets.GITHUB_TOKEN }}

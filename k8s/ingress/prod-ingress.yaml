@@ -5,18 +5,9 @@ metadata:
   namespace: wedding
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-    - host: wedding-api.ldkube.com
-      http:
-        paths:
-          - path: /
-            backend:
-              service:
-                name: wedding-guest
-                port:
-                  number: 80
-            pathType: ImplementationSpecific
     - host: api.karenandlucas.com
       http:
         paths:
@@ -29,6 +20,5 @@ spec:
             pathType: ImplementationSpecific
   tls:
     - hosts:
-        - wedding-api.ldkube.com
         - api.karenandlucas.com
       secretName: wedding-api-tls

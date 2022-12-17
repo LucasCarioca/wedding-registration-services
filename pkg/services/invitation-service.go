@@ -111,7 +111,7 @@ func (s *InvitationService) Search(value string) (*models.Invitation, error) {
 	return nil, err
 }
 
-//DeleteByID deletes an invitation by its id and returns the deleted item and an error is it cannot be found
+//DeleteByID deletes an invitation by its id and returns the deleted item or an error is it cannot be found
 func (s *InvitationService) DeleteByID(id int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -120,5 +120,18 @@ func (s *InvitationService) DeleteByID(id int) (*models.Invitation, error) {
 		return nil, errors.New("INVITATION_NOT_FOUND")
 	}
 	s.db.Delete(&i)
+	return &i, nil
+}
+
+//DeclineById decline an invitation by its id and returns the item or an error is it cannot be found
+func (s *InvitationService) DeclineById(id int) (*models.Invitation, error) {
+	i := models.Invitation{}
+	var c int64
+	s.db.Find(&i, id).Count(&c)
+	if c < 1 {
+		return nil, errors.New("INVITATION_NOT_FOUND")
+	}
+	i.Declined = true
+	s.db.Save(&i)
 	return &i, nil
 }
