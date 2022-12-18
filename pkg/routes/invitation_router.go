@@ -28,7 +28,7 @@ type CreateInvitationRequest struct {
 }
 
 type DeclineInvitationRequest struct {
-	Instruction string `json:"instruction" binding:"required""`
+	Instruction string `json:"instruction" binding:"required"`
 }
 
 //NewInvitationRouter creates a new instance of the invitation router
