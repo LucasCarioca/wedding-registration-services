@@ -1,3 +1,13 @@
+## [1.1.1](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.1.0...v1.1.1) (2022-12-18)
+
+
+### Bug Fixes
+
+* fmt ([7db5776](https://github.com/LucasCarioca/wedding-registration-services/commit/7db5776f73a3f283ac9a4d4ee65540cff9daae94))
+* update workflow ([ac4a894](https://github.com/LucasCarioca/wedding-registration-services/commit/ac4a894edf196cf9d1d14d889f4a902f901eb38a))
+* update workflow ([d1d1731](https://github.com/LucasCarioca/wedding-registration-services/commit/d1d17318c207349cf51498a82bf4d2afacd85743))
+* vet issue ([0409729](https://github.com/LucasCarioca/wedding-registration-services/commit/04097293b03327197bcc06662fa789b75087e34c))
+
 # [1.1.0](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.0.10...v1.1.0) (2022-06-01)
 
 
