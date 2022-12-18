@@ -15,7 +15,7 @@ type Invitation struct {
 	Phone           string `json:"phone" binding:"required"`
 	Email           string `json:"email" binding:"required"`
 	RegistrationKey string `json:"registration_key" binding:"required" gorm:"index;"`
-	Declined 		bool   `json:"declined" binding:"required" gorm:"index;"`
+	Declined        bool   `json:"declined" binding:"required" gorm:"index;"`
 }
 
 //BeforeCreate creates a random uuid registration key for new invitations
