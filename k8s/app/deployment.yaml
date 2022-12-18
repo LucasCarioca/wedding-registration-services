@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: wedding-service
-          image: ghcr.io/lucascarioca/wedding-registration-services:latest
+          image: ghcr.io/lucascarioca/wedding-registration-services:v1.1.1
           ports:
             - containerPort: 80
               name: w-r-s-http
