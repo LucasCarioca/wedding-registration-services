@@ -135,3 +135,17 @@ func (s *InvitationService) DeclineById(id int) (*models.Invitation, error) {
 	s.db.Save(&i)
 	return &i, nil
 }
+
+
+//UpdateGuestCountById update an invitation guest count by its id and returns the item or an error is it cannot be found
+func (s *InvitationService) UpdateGuestCountById(id int, change int) (*models.Invitation, error) {
+	i := models.Invitation{}
+	var c int64
+	s.db.Find(&i, id).Count(&c)
+	if c < 1 {
+		return nil, errors.New("INVITATION_NOT_FOUND")
+	}
+	i.GuestCount = i.GuestCount + change
+	s.db.Save(&i)
+	return &i, nil
+}

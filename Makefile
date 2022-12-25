@@ -6,6 +6,9 @@ download:
 start:
 	go run .
 
+start-release:
+	GIN_MODE=release go run .
+
 test:
 	go test ./pkg/... -v -covermode=count -coverprofile=coverage.out
 

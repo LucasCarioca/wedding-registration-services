@@ -18,5 +18,6 @@ COPY --from=builder /wedding-api /wedding-api
 COPY --from=builder /app/config.* /
 
 ENV PORT=80
+ENV GIN_MODE=release
 
 ENTRYPOINT ["/wedding-api"]
