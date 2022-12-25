@@ -136,7 +136,6 @@ func (s *InvitationService) DeclineById(id int) (*models.Invitation, error) {
 	return &i, nil
 }
 
-
 //UpdateGuestCountById update an invitation guest count by its id and returns the item or an error is it cannot be found
 func (s *InvitationService) UpdateGuestCountById(id int, change int) (*models.Invitation, error) {
 	i := models.Invitation{}
