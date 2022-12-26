@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-//Invitation model for the invitation table
+// Invitation model for the invitation table
 type Invitation struct {
 	Base
 	Name            string `json:"name" binding:"required"`
@@ -18,7 +18,7 @@ type Invitation struct {
 	Declined        bool   `json:"declined" binding:"required" gorm:"index;"`
 }
 
-//BeforeCreate creates a random uuid registration key for new invitations
+// BeforeCreate creates a random uuid registration key for new invitations
 func (i *Invitation) BeforeCreate(tx *gorm.DB) error {
 	i.RegistrationKey = uuid.NewString()
 	i.Declined = false

@@ -9,13 +9,13 @@ import (
 	"gorm.io/gorm"
 )
 
-//InvitationService service for managing invitations
+// InvitationService service for managing invitations
 type InvitationService struct {
 	db     *gorm.DB
 	config *viper.Viper
 }
 
-//NewInvitationService creates an instance of the invitation service
+// NewInvitationService creates an instance of the invitation service
 func NewInvitationService() *InvitationService {
 	return &InvitationService{
 		db:     datasource.GetDataSource(),
@@ -23,14 +23,14 @@ func NewInvitationService() *InvitationService {
 	}
 }
 
-//GetAll returns a list with all invitations
+// GetAll returns a list with all invitations
 func (s *InvitationService) GetAll() []models.Invitation {
 	invitations := make([]models.Invitation, 0)
 	s.db.Find(&invitations)
 	return invitations
 }
 
-//GetByRegistrationKey returns an invitation by its registration key and an error is it cannot be found
+// GetByRegistrationKey returns an invitation by its registration key and an error is it cannot be found
 func (s *InvitationService) GetByRegistrationKey(key string) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -41,7 +41,7 @@ func (s *InvitationService) GetByRegistrationKey(key string) (*models.Invitation
 	return &i, nil
 }
 
-//GetByID returns an invitation by its id and an error is it cannot be found
+// GetByID returns an invitation by its id and an error is it cannot be found
 func (s *InvitationService) GetByID(id int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -52,7 +52,7 @@ func (s *InvitationService) GetByID(id int) (*models.Invitation, error) {
 	return &i, nil
 }
 
-//Create creates a new invitation and returns it
+// Create creates a new invitation and returns it
 func (s *InvitationService) Create(name string, message string, email string, phone string, guestCount int) (*models.Invitation, error) {
 	i := &models.Invitation{
 		Name:       name,
@@ -69,7 +69,7 @@ func (s *InvitationService) Create(name string, message string, email string, ph
 	return i, nil
 }
 
-//GetByPhone gets an invitation by phone
+// GetByPhone gets an invitation by phone
 func (s *InvitationService) GetByPhone(phone string) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -80,7 +80,7 @@ func (s *InvitationService) GetByPhone(phone string) (*models.Invitation, error)
 	return &i, nil
 }
 
-//GetByEmail gets an invitation by email
+// GetByEmail gets an invitation by email
 func (s *InvitationService) GetByEmail(email string) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -91,7 +91,7 @@ func (s *InvitationService) GetByEmail(email string) (*models.Invitation, error)
 	return &i, nil
 }
 
-//Search Attempts to find an invitation by phone email and registration key
+// Search Attempts to find an invitation by phone email and registration key
 func (s *InvitationService) Search(value string) (*models.Invitation, error) {
 	i, err := s.GetByRegistrationKey(value)
 	if err == nil {
@@ -111,7 +111,7 @@ func (s *InvitationService) Search(value string) (*models.Invitation, error) {
 	return nil, err
 }
 
-//DeleteByID deletes an invitation by its id and returns the deleted item or an error is it cannot be found
+// DeleteByID deletes an invitation by its id and returns the deleted item or an error is it cannot be found
 func (s *InvitationService) DeleteByID(id int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -123,7 +123,7 @@ func (s *InvitationService) DeleteByID(id int) (*models.Invitation, error) {
 	return &i, nil
 }
 
-//DeclineById decline an invitation by its id and returns the item or an error is it cannot be found
+// DeclineById decline an invitation by its id and returns the item or an error is it cannot be found
 func (s *InvitationService) DeclineById(id int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64
@@ -136,7 +136,7 @@ func (s *InvitationService) DeclineById(id int) (*models.Invitation, error) {
 	return &i, nil
 }
 
-//UpdateGuestCountById update an invitation guest count by its id and returns the item or an error is it cannot be found
+// UpdateGuestCountById update an invitation guest count by its id and returns the item or an error is it cannot be found
 func (s *InvitationService) UpdateGuestCountById(id int, change int) (*models.Invitation, error) {
 	i := models.Invitation{}
 	var c int64

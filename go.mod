@@ -1,6 +1,6 @@
 module github.com/LucasCarioca/wedding-registration-services
 
-go 1.18
+go 1.19
 
 require (
 	github.com/gin-contrib/cors v1.3.1

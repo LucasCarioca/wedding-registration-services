@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-//GuestRouter router for guest CRUD operations
+// GuestRouter router for guest CRUD operations
 type GuestRouter struct {
 	db     *gorm.DB
 	config *viper.Viper
@@ -20,13 +20,13 @@ type GuestRouter struct {
 	is     *services.InvitationService
 }
 
-//CreateGuestRequest structure of the create request for guests
+// CreateGuestRequest structure of the create request for guests
 type CreateGuestRequest struct {
 	FirstName string `json:"first_name" binding:"required"`
 	LastName  string `json:"last_name" binding:"required"`
 }
 
-//NewGuestRouter creates a new instance of the guest router
+// NewGuestRouter creates a new instance of the guest router
 func NewGuestRouter(app *gin.Engine) {
 	r := GuestRouter{
 		db:     datasource.GetDataSource(),

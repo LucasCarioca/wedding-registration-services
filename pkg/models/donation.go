@@ -1,6 +1,6 @@
 package models
 
-//Donation model for the donation table
+// Donation model for the donation table
 type Donation struct {
 	Base
 	FirstName string `json:"first_name" binding:"required"`

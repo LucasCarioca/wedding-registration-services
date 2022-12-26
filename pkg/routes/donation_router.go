@@ -10,14 +10,14 @@ import (
 	"net/http"
 )
 
-//DonationRouter  router for donation CRUD operations
+// DonationRouter  router for donation CRUD operations
 type DonationRouter struct {
 	s      *services.DonationService
 	db     *gorm.DB
 	config *viper.Viper
 }
 
-//CreateDonationRequest structure of the create request for donation
+// CreateDonationRequest structure of the create request for donation
 type CreateDonationRequest struct {
 	FirstName string `json:"first_name" binding:"required"`
 	LastName  string `json:"last_name" binding:"required"`
@@ -25,7 +25,7 @@ type CreateDonationRequest struct {
 	Amount    string `json:"amount" binding:"required"`
 }
 
-//NewDonationRouter creates a new instance of the donation router
+// NewDonationRouter creates a new instance of the donation router
 func NewDonationRouter(app *gin.Engine) {
 	r := DonationRouter{
 		s:      services.NewDonationService(),

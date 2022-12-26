@@ -11,7 +11,7 @@ import (
 
 var db *gorm.DB
 
-//Init initializes the database connection
+// Init initializes the database connection
 func Init(config *viper.Viper) {
 	var err error
 	driver := config.GetString("data_source.driver")
@@ -34,7 +34,7 @@ func Init(config *viper.Viper) {
 	models.Init(db)
 }
 
-//GetDataSource gets the instance of the database connection
+// GetDataSource gets the instance of the database connection
 func GetDataSource() *gorm.DB {
 	return db
 }

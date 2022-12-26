@@ -11,14 +11,14 @@ import (
 	"net/http"
 )
 
-//InvitationRouter  router for invitation CRUD operations
+// InvitationRouter  router for invitation CRUD operations
 type InvitationRouter struct {
 	s      *services.InvitationService
 	db     *gorm.DB
 	config *viper.Viper
 }
 
-//CreateInvitationRequest structure of the create request for invitations
+// CreateInvitationRequest structure of the create request for invitations
 type CreateInvitationRequest struct {
 	Name       string `json:"name" binding:"required"`
 	Message    string `json:"message" binding:"required"`
@@ -31,7 +31,7 @@ type UpdateInvitationRequest struct {
 	Instruction string `json:"instruction" binding:"required"`
 }
 
-//NewInvitationRouter creates a new instance of the invitation router
+// NewInvitationRouter creates a new instance of the invitation router
 func NewInvitationRouter(app *gin.Engine) {
 	r := InvitationRouter{
 		s:      services.NewInvitationService(),

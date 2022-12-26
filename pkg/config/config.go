@@ -9,7 +9,7 @@ import (
 
 var config *viper.Viper
 
-//Init initializes the configs and loads the specific values
+// Init initializes the configs and loads the specific values
 func Init(env string) {
 	config = viper.New()
 
@@ -32,7 +32,7 @@ func Init(env string) {
 	}
 }
 
-//GetConfig returns the instance of the config values
+// GetConfig returns the instance of the config values
 func GetConfig() *viper.Viper {
 	return config
 }
