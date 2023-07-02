@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.2.0...v1.2.1) (2022-12-26)
+
+
+### Bug Fixes
+
+* bump go version ([d7481be](https://github.com/LucasCarioca/wedding-registration-services/commit/d7481be07d513c5b016628ddf17bd5f69dd626cc))
+* bump go version in workflow ([6dd038b](https://github.com/LucasCarioca/wedding-registration-services/commit/6dd038b80c329d210f02c31604e4a37d8a9e9a98))
+
 # [1.2.0](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.1.1...v1.2.0) (2022-12-25)
 
 
