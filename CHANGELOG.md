@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.2.1...v1.2.2) (2023-07-02)
+
+
+### Bug Fixes
+
+* disable new RSVPs ([5b237a8](https://github.com/LucasCarioca/wedding-registration-services/commit/5b237a8ac3ea0f65bc6fd642a55b20b729f0d551))
+
 ## [1.2.1](https://github.com/LucasCarioca/wedding-registration-services/compare/v1.2.0...v1.2.1) (2022-12-26)
 
 
