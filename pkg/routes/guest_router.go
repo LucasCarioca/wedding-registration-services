@@ -67,23 +67,25 @@ func (r *GuestRouter) getAllGuests(ctx *gin.Context) {
 }
 
 func (r *GuestRouter) createGuest(ctx *gin.Context) {
-	var data CreateGuestRequest
-	if err := ctx.BindJSON(&data); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": "GUEST_CREATE_PAYLOAD_INVALID", "details": err.Error()})
-		return
-	}
-	i, err := r.checkInvitation(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
-		return
-	}
-
-	if r.gs.GetCountByInvitationID(i.ID) >= i.GuestCount {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invitation guest count limit reached", "error": "GUEST_COUNT_LIMIT"})
-		return
-	}
-	g := r.gs.Create(data.FirstName, data.LastName, *i)
-	ctx.JSON(http.StatusOK, g)
+	ctx.JSON(http.StatusBadRequest, gin.H{"message": "RSVP deadline has passed", "error": "RSVP_DEADLINE_PASSED"})
+	return
+	//var data CreateGuestRequest
+	//if err := ctx.BindJSON(&data); err != nil {
+	//	ctx.JSON(http.StatusBadRequest, gin.H{"message": "missing or incorrect fields received", "error": "GUEST_CREATE_PAYLOAD_INVALID", "details": err.Error()})
+	//	return
+	//}
+	//i, err := r.checkInvitation(ctx)
+	//if err != nil {
+	//	ctx.JSON(http.StatusNotFound, gin.H{"message": "invitation not found", "error": "INVITATION_NOT_FOUND", "details": err.Error()})
+	//	return
+	//}
+	//
+	//if r.gs.GetCountByInvitationID(i.ID) >= i.GuestCount {
+	//	ctx.JSON(http.StatusBadRequest, gin.H{"message": "invitation guest count limit reached", "error": "GUEST_COUNT_LIMIT"})
+	//	return
+	//}
+	//g := r.gs.Create(data.FirstName, data.LastName, *i)
+	//ctx.JSON(http.StatusOK, g)
 }
 
 func (r *GuestRouter) getGuest(ctx *gin.Context) {
